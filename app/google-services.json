@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "442605225497",
+    "project_id": "notextra-1e320",
+    "storage_bucket": "notextra-1e320.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:442605225497:android:685bcda6163273c3af8c88",
+        "android_client_info": {
+          "package_name": "com.mobilenvision.notextra"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBp2YhGagc09Lw6QXiLsUEgcKikDiJyKZ8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

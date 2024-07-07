@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="add_note_synonyms">
+        <item>add note</item>
+        <item>create note</item>
+        <item>new note</item>
+        <item>write note</item>
+        <item>note entry</item>
+    </string-array>
+
+    <string-array name="add_reminder_synonyms">
+        <item>add reminder</item>
+        <item>create reminder</item>
+        <item>new reminder</item>
+        <item>set reminder</item>
+        <item>reminder entry</item>
+    </string-array>
+</resources>

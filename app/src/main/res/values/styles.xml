@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App.Light" parent="Theme.NoteXtra">
+        <item name="colorPrimary">@color/lightColorPrimary</item>
+        <item name="colorSplashBackground">@color/lightColorSplashBackground</item>
+        <item name="colorSplashLogo">@color/lightColorSplashLogo</item>
+        <item name="colorAccent">@color/lightColorAccent</item>
+        <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
+        <item name="colorButton">@color/lightColorButton</item>
+        <item name="colorButtonDark">@color/lightColorButtonDark</item>
+        <item name="colorButtonText">@color/lightColorButtonText</item>
+        <item name="colorTextHint">@color/lightColorTextHint</item>
+        <item name="colorEditTextIcon">@color/lightColorButtonDark</item>
+        <item name="colorStroke">@color/lightColorStroke</item>
+        <item name="colorRoundItemBackground">@color/lightColorRoundItemBackground</item>
+        <item name="colorUnselected">@color/lightColorUnselected</item>
+        <item name="color">@color/lightColor</item>
+    </style>
+
+    <style name="Theme.App.Dark" parent="Theme.NoteXtra">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSplashBackground">@color/colorSplashBackground</item>
+        <item name="colorSplashLogo">@color/colorSplashLogo</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorButton">@color/colorButton</item>
+        <item name="colorButtonDark">@color/colorTextHint</item>
+        <item name="colorButtonText">@color/colorEditTextIcon</item>
+        <item name="colorTextHint">@color/colorPrimaryDark</item>
+        <item name="colorEditTextIcon">@color/colorEditTextIcon</item>
+        <item name="colorStroke">@color/colorStroke</item>
+        <item name="colorRoundItemBackground">@color/colorRoundItemBackground</item>
+        <item name="colorUnselected">@color/colorUnselected</item>
+        <item name="color">@color/color</item>
+    </style>
+</resources>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="colorSplashBackground" format="reference"/>
+    <attr name="colorSplashLogo" format="reference"/>
+    <attr name="colorBottomSheetBackground" format="reference"/>
+    <attr name="colorBottomSheetTextColor" format="reference"/>
+    <attr name="colorAppNameTextColor" format="reference"/>
+    <attr name="colorBottomSheetBackgroundColor" format="reference"/>
+    <attr name="colorBottomSheetAppBackgroundColor" format="reference"/>
+    <attr name="colorButton" format="reference"/>
+    <attr name="colorButtonDark" format="reference"/>
+    <attr name="colorButtonText" format="reference"/>
+    <attr name="colorTextHint" format="reference"/>
+    <attr name="colorPasswordHeaderTextColor" format="reference"/>
+    <attr name="colorMenuItemBackground" format="reference"/>
+    <attr name="colorMenuItemLogo" format="reference"/>
+    <attr name="colorMenuSelectedItemLogo" format="reference"/>
+    <attr name="colorMenuArrowLogo" format="reference"/>
+    <attr name="colorMenuBackgroundLogoutLogo" format="reference"/>
+    <attr name="colorLogoutLogo" format="reference"/>
+    <attr name="backgroundScanHand" format="reference"/>
+    <attr name="backgroundLogin" format="reference" />
+    <attr name="colorActionLine" format="reference"/>
+    <attr name="colorProgressBarOne" format="reference"/>
+    <attr name="colorProgressBarTwo" format="reference"/>
+    <attr name="colorProgressBarThree" format="reference"/>
+    <attr name="progressBar" format="reference"/>
+    <attr name="colorEditTextIcon" format="reference"/>
+    <attr name="colorVersionNumber" format="reference"/>
+    <attr name="colorStroke" format="reference"/>
+    <attr name="colorRoundItemBackground" format="reference"/>
+    <attr name="colorUnselected" format="reference"/>
+</resources>

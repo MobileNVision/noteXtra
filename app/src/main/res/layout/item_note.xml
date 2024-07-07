@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.mobilenvision.notextra.ui.notes.NoteItemViewModel" />
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_white_item_background"
+        android:onClick="@{()-> viewModel.onItemClick()}"
+        app:onLongClickListener="@{viewModel.onLongClickListener}"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/note_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/title"
+            android:inputType="text"
+            android:text="@{viewModel.note.title}"
+            android:padding="10dp"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:imeOptions="actionNext"
+            android:textColor="?attr/colorEditTextIcon"
+            app:layout_constraintLeft_toRightOf="@id/category"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category" />
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minWidth="100dp"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:gravity="center"
+            android:onClick="@{()->viewModel.onItemCategoryClick()}"
+            android:text="@{viewModel.note.category}"
+            android:textColor="?attr/colorSplashBackground"
+            android:background="@drawable/rounded_gradient_items_category"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+        <TextView
+            android:id="@+id/note_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.note.text}"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="top"
+            android:hint="@string/enter_note"
+            android:textColor="?attr/colorEditTextIcon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/note_title"
+            app:layout_constraintVertical_bias="0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

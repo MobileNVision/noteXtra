@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.NoteXtra" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/lightColorPrimary</item>
+        <item name="colorSplashBackground">@color/lightColorSplashBackground</item>
+        <item name="colorSplashLogo">@color/lightColorSplashLogo</item>
+        <item name="colorAccent">@color/lightColorAccent</item>
+        <item name="colorPrimaryDark">@color/lightColorPrimaryDark</item>
+        <item name="colorButton">@color/lightColorButton</item>
+        <item name="colorButtonDark">@color/lightColorButtonDark</item>
+        <item name="colorButtonText">@color/lightColorButtonText</item>
+        <item name="colorTextHint">@color/lightColorTextHint</item>
+        <item name="colorEditTextIcon">@color/lightColorButtonDark</item>
+        <item name="colorStroke">@color/lightColorStroke</item>
+        <item name="colorRoundItemBackground">@color/lightColorRoundItemBackground</item>
+        <item name="colorUnselected">@color/lightColorUnselected</item>
+        <item name="color">@color/lightColor</item>
+    </style>
+
+    <style name="Theme.NoteXtra.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+</resources>
