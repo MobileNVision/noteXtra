@@ -283,5 +283,4 @@ class NotesViewModel (dataManager: DataManager) : BaseViewModel<NotesNavigator>(
             }
         }
     }
-
 }
