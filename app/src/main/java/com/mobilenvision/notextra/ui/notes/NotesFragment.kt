@@ -25,6 +25,7 @@ import android.widget.Button
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
@@ -255,7 +256,15 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
                 filterNotes(s.toString())
             }
         })
+        baseActivity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            handleOnBackPress()
+        }
     }
+
+    private fun handleOnBackPress() {
+        activity?.finish()
+    }
+
     private fun filterNotes(query: String) {
         val filteredList = noteList.filter {
             (it.title?.contains(query, ignoreCase = true) ?: false) ||
@@ -278,19 +287,8 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
     }
 
     private fun setupRecyclerView() {
+        binding.notesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         notesAdapter = NotesAdapter(emptyList())
-        val gridLayoutManager = GridLayoutManager(baseActivity!!, 2)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                val note = notesAdapter.getItem(position)
-                return if (note != null && (note.title?.length ?: 0 > 100 || note.text?.length ?: 0 > 200)) {
-                    2
-                } else {
-                    1
-                }
-            }
-        }
-        binding.notesRecyclerView.layoutManager = gridLayoutManager
         binding.notesRecyclerView.adapter = notesAdapter
         notesAdapter.setListener(this)
         notesAdapter.setContext(requireContext())

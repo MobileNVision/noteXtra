@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.mobilenvision.notextra.R
@@ -16,6 +17,9 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 object BindingUtils {
+    private const val MAX_TEXT_LENGTH = 100
+    private const val MAX_TITLE_LENGTH = 25
+
     @BindingAdapter("noteAdapter")
     @JvmStatic
     fun noteAdapter(recyclerView: RecyclerView, note: List<Note>?) {
@@ -79,5 +83,25 @@ object BindingUtils {
     @BindingAdapter("onLongClickListener")
     fun onLongClickListener(view: View, listener: View.OnLongClickListener) {
         view.setOnLongClickListener(listener)
+    }
+
+    @JvmStatic
+    @BindingAdapter("textTitle")
+    fun setTextTitle(view: TextView, data: String) {
+        if (data.length > MAX_TITLE_LENGTH) {
+            view.text = "${data.substring(0, MAX_TITLE_LENGTH)}..."
+        } else {
+            view.text = data
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("textDescription")
+    fun textDescription(view: TextView, data: String) {
+        if (data.length > MAX_TITLE_LENGTH) {
+            view.text = "${data.substring(0, MAX_TEXT_LENGTH)}..."
+        } else {
+            view.text = data
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.mobilenvision.notextra.ui.profile
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.mobilenvision.notextra.R
@@ -43,12 +44,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         binding = fetchViewDataBinding()
         showBottomNavigation()
         binding.darkModeCheckBox.isChecked = currentTheme == "DARK_THEME"
+        baseActivity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            handleOnBackPress()
+        }
+
     }
 
     override fun performDependencyInjection(buildComponent: FragmentComponent) {
         buildComponent.inject(this)
     }
-
+    private fun handleOnBackPress() {
+        activity?.finish()
+    }
     override fun onSaveClick() {
         val isChecked = binding.darkModeCheckBox.isChecked
         val selectedTheme = if (isChecked) "DARK_THEME" else "LIGHT_THEME"

@@ -12,7 +12,7 @@
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/round_white_item_background"
         android:onClick="@{()-> viewModel.onItemClick()}"
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title"
-            android:text="@{viewModel.note.title}"
+            app:textTitle="@{viewModel.note.title}"
             android:padding="10dp"
             android:textStyle="bold"
             android:textSize="24sp"
@@ -43,6 +43,7 @@
             android:minWidth="100dp"
             android:textSize="16sp"
             android:padding="5dp"
+            android:layout_margin="3dp"
             android:gravity="center"
             android:onClick="@{()->viewModel.onItemCategoryClick()}"
             android:text="@{viewModel.note.category}"
@@ -57,7 +58,7 @@
             android:id="@+id/note_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.note.text}"
+            app:textDescription="@{viewModel.note.text}"
             android:padding="10dp"
             android:textSize="16sp"
             android:layout_marginRight="10dp"

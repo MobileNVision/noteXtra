@@ -31,7 +31,7 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailVie
     private lateinit var categories: List<String>
     private var notePriority: String = "Düşük"
     lateinit var category: String
-    private var selectedTime: String = Calendar.getInstance().time.toString()
+    private var selectedTime: String = ""
     lateinit var note: Note
 
     @Inject

@@ -6,7 +6,8 @@
                 android:angle="90"
                 android:startColor="@color/colorEditTextIcon"
                 android:endColor="@color/colorEditTextIcon" />
-            <corners android:topRightRadius="10dp" />
+            <corners android:topRightRadius="10dp"
+                android:bottomLeftRadius="10dp"/>
         </shape>
     </item>
 </layer-list>

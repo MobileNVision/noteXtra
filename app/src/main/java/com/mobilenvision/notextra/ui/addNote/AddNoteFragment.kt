@@ -51,7 +51,7 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
     lateinit var viewModel: AddNoteViewModel
     lateinit var category: Category
     lateinit var note: Note
-    private var selectedTime: String = Calendar.getInstance().time.toString()
+    private var selectedTime: String = ""
 
     private lateinit var binding: FragmentAddNoteBinding
     override val bindingVariable: Int
@@ -79,11 +79,14 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
                 if (!speechResult.isNullOrEmpty()) {
                     val text = Editable.Factory.getInstance().newEditable(speechResult[0])
                     if(isTitle) {
-                        binding.noteTitle.text = text
-
+                        val currentText = binding.noteTitle.text.toString()
+                        val combinedText = Editable.Factory.getInstance().newEditable("$currentText $text")
+                        binding.noteTitle.text = combinedText
                     }
                     else{
-                        binding.noteDescription.text = text
+                        val currentText = binding.noteDescription.text.toString()
+                        val combinedText = Editable.Factory.getInstance().newEditable("$currentText $text")
+                        binding.noteDescription.text = combinedText
                     }
                 }
             }
