@@ -126,7 +126,9 @@ class AddNoteViewModel (dataManager: DataManager) : BaseViewModel<AddNoteNavigat
     private fun updateIsSynchronized(id: String) {
         dataManager.updateIsSynchronized(id,true, object : DbCallback<Boolean> {
             override fun onSuccess(result: Boolean) {
-                navigator?.onSuccessAddNote()
+                Handler(Looper.getMainLooper()).post {
+                    navigator?.onSuccessAddNote()
+                }
             }
             override fun onError(error: Throwable) {
                 navigator?.onFailure(error.message)

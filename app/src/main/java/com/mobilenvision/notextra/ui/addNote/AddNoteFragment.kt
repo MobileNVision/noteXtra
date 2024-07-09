@@ -198,7 +198,8 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
 
     override fun onSuccessAddNote() {
         if(selectedTime.isNotEmpty()){
-        requestExactAlarmPermission()}
+        requestExactAlarmPermission()
+        }
         showToast(baseActivity!!.getString(R.string.success_load))
         loadFragment(NotesFragment(), NotesFragment.TAG)
     }

@@ -222,6 +222,7 @@ class NotesViewModel (dataManager: DataManager) : BaseViewModel<NotesNavigator>(
 
         noteDocument.delete()
             .addOnSuccessListener {
+                dataManager.removeDeletedNoteId(id)
                 deleteNoteVersions(id)
                 if (size == 1) {
                     navigator?.deleteNoteSuccess()
