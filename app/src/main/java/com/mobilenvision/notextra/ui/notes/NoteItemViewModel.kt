@@ -8,9 +8,9 @@ class NoteItemViewModel() {
     private var noteLiveData: MutableLiveData<Note> = MutableLiveData()
     private lateinit var noteItemViewModelListener: NoteItemViewModelListener
 
-    constructor(note: Note, enterpriseItemViewModelListener: NoteItemViewModelListener) : this() {
+    constructor(note: Note, noteItemViewModelListener: NoteItemViewModelListener) : this() {
         this.noteLiveData.value = note
-        this.noteItemViewModelListener = enterpriseItemViewModelListener
+        this.noteItemViewModelListener = noteItemViewModelListener
     }
 
     fun onItemClick() {

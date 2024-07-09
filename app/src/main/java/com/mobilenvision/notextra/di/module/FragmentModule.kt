@@ -7,6 +7,7 @@ import com.mobilenvision.notextra.data.DataManager
 import com.mobilenvision.notextra.ui.addNote.AddNoteViewModel
 import com.mobilenvision.notextra.ui.base.BaseFragment
 import com.mobilenvision.notextra.ui.noteDetail.NoteDetailViewModel
+import com.mobilenvision.notextra.ui.noteDetail.NoteVersionsAdapter
 import com.mobilenvision.notextra.ui.notes.NotesAdapter
 import com.mobilenvision.notextra.ui.notes.NotesViewModel
 import com.mobilenvision.notextra.ui.profile.ProfileViewModel
@@ -74,7 +75,11 @@ class FragmentModule(fragment: BaseFragment<*, *>) {
         return ViewModelProvider(fragment, factory)[NoteDetailViewModel::class.java]
     }
     @Provides
-    fun provideNotesAdapter(): NotesAdapter? {
+    fun provideNotesAdapter(): NotesAdapter {
         return NotesAdapter(ArrayList())
+    }
+    @Provides
+    fun provideNoteVersionAdapter(): NoteVersionsAdapter {
+        return NoteVersionsAdapter(ArrayList())
     }
 }

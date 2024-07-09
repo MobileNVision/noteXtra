@@ -37,30 +37,30 @@
 
         <TextView
             android:id="@+id/email"
-            android:layout_width="200dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/email"
             android:drawablePadding="10dp"
             android:padding="10dp"
-            app:layout_constraintTop_toBottomOf="@id/lastName"
-            app:layout_constraintLeft_toLeftOf="@id/lastName"
+            app:layout_constraintTop_toBottomOf="@id/profileImage"
+            app:layout_constraintLeft_toLeftOf="@id/profileImage"
             android:layout_marginTop="10dp"
             android:clickable="false"
             android:textColor="?attr/colorTextHint"
             android:text="@{viewModel.email}"
-            />
+            app:drawableLeftCompat="@drawable/email" />
 
 
         <EditText
             android:id="@+id/firstName"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/authentication"
+            android:drawableStart="@drawable/authentication"
             android:drawablePadding="10dp"
             android:padding="10dp"
             android:inputType="text"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             android:hint="@string/first_name"
+            android:textSize="24sp"
             android:textStyle="bold"
             android:text="@{viewModel.firstName}"
             app:layout_constraintTop_toTopOf="@id/profileImage"
@@ -68,19 +68,19 @@
             android:imeOptions="actionDone"
             android:textColor="?attr/colorEditTextIcon"
             android:textColorHint="?attr/colorTextHint"
-            android:background="@drawable/round_white_item_background"
+            android:background="?attr/colorSplashBackground"
             />
 
         <EditText
             android:id="@+id/lastName"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/authentication"
+            android:drawableStart="@drawable/authentication"
             android:drawablePadding="10dp"
             android:padding="10dp"
-            android:layout_marginTop="10dp"
             android:inputType="text"
             android:hint="@string/last_name"
+            android:textSize="24sp"
             android:text="@{viewModel.lastName}"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/firstName"
@@ -88,7 +88,7 @@
             android:imeOptions="actionDone"
             android:textColor="?attr/colorEditTextIcon"
             android:textColorHint="?attr/colorTextHint"
-            android:background="@drawable/round_white_item_background"
+            android:background="?attr/colorSplashBackground"
             />
 
         <androidx.core.widget.ContentLoadingProgressBar
@@ -108,10 +108,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/dark_mode"
-            app:layout_constraintTop_toBottomOf="@id/email"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/email"
+            app:layout_constraintStart_toEndOf="@id/email"
+            android:layout_marginStart="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/email"
             android:textColor="?attr/colorEditTextIcon"
             android:backgroundTint="?attr/colorEditTextIcon"
             android:buttonTint="?attr/colorEditTextIcon"

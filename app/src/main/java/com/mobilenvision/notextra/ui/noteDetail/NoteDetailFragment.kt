@@ -4,11 +4,14 @@ import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.addCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mobilenvision.notextra.BR
 import com.mobilenvision.notextra.R
 import com.mobilenvision.notextra.data.model.db.Category
@@ -22,11 +25,11 @@ import java.util.Calendar
 import javax.inject.Inject
 
 
-class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailViewModel>(), NoteDetailNavigator {
+class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailViewModel>(), NoteDetailNavigator, NoteVersionsAdapter.NoteVersionsAdapterListener {
 
     private lateinit var adapter: ArrayAdapter<String>
     private lateinit var categories: List<String>
-    private var notePriority: String = "Low"
+    private var notePriority: String = "Düşük"
     lateinit var category: String
     private var selectedTime: String = Calendar.getInstance().time.toString()
     lateinit var note: Note
@@ -47,10 +50,9 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailVie
         viewModel = ViewModelProvider(this)[NoteDetailViewModel::class.java]
         viewModel.setNavigator(this)
         binding.viewModel = viewModel
-
         mViewModel.getCategory()
-
-
+        val internetStatus = CommonUtils.isInternetAvailable(baseActivity!!)
+        mViewModel.setInternetStatus(internetStatus)
     }
 
     companion object {
@@ -79,17 +81,14 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailVie
     }
 
     private fun initNote(){
-        note = (arguments?.getSerializable("note") as? Note)!!
-        if (note != null) {
-            binding.noteTitle.setText(note.title)
-            binding.noteDescription.setText(note.text)
-            binding.noteReminderTime.text = note.reminderTime
-            binding.spinnerCategory.setSelection(categories.indexOf(note.category))
-            when (note.priority) {
-                baseActivity!!.getString(R.string.low) -> binding.radioButtonLow.isChecked = true
-                baseActivity!!.getString(R.string.medium) -> binding.radioButtonMedium.isChecked = true
-                baseActivity!!.getString(R.string.high) -> binding.radioButtonHigh.isChecked = true
-            }
+        binding.noteTitle.setText(note.title)
+        binding.noteDescription.setText(note.text)
+        binding.noteReminderTime.text = note.reminderTime
+        binding.spinnerCategory.setSelection(categories.indexOf(note.category))
+        when (note.priority) {
+            baseActivity!!.getString(R.string.low) -> binding.radioButtonLow.isChecked = true
+            baseActivity!!.getString(R.string.medium) -> binding.radioButtonMedium.isChecked = true
+            baseActivity!!.getString(R.string.high) -> binding.radioButtonHigh.isChecked = true
         }
     }
 
@@ -128,27 +127,29 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailVie
         }
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item)
         binding.spinnerCategory.adapter = adapter
+        note = (arguments?.getSerializable("note") as? Note)!!
         initNote()
     }
 
     override fun onEditClick() {
+        var category = ""
         if(binding.spinnerCategory.selectedItemPosition != 0){
             category = binding.spinnerCategory.selectedItem?.toString()!!
         }
         val updatedTime = CommonUtils.getCurrentDateTime()
 
-        var note = Note(
+        val updatedNote = Note(
+            noteId= note.id,
             title = binding.noteTitle.text.toString(),
             text = binding.noteDescription.text.toString(),
-            category = category.takeIf { it?.isNotEmpty() ?: true },
+            category = category.takeIf { it.isNotEmpty() },
             reminderTime = selectedTime.takeIf { it.isNotEmpty() },
             updatedTime = updatedTime,
-            version = 1,
+            version = note.version!!+1,
             userId = mViewModel.getUserData().third,
             priority = notePriority
-
         )
-        mViewModel.updateNote(note)
+        mViewModel.updateNote(updatedNote)
     }
 
     override fun onDeleteClick() {
@@ -177,8 +178,10 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailVie
         }
     }
 
-    override fun onSuccessUpdateNote() {
-        loadFragment(NotesFragment(), NotesFragment.TAG)
+    override fun onSuccessUpdateNote(note: Note) {
+        this.note = note
+        initNote()
+        showToast(baseActivity!!.getString(R.string.update_success))
     }
 
     override fun deleteNoteSuccess() {
@@ -295,5 +298,54 @@ class NoteDetailFragment : BaseFragment<FragmentNoteDetailBinding, NoteDetailVie
 
     override fun onSuccessDeleteCategory() {
         showToast(baseActivity!!.getString(R.string.delete_success))
+    }
+
+    override fun handleNoteVersions(noteVersions: List<Note>) {
+        if (noteVersions.isNotEmpty()) {
+            showNoteVersionsDialog(noteVersions)
+        }
+        else{
+            showToast(baseActivity!!.getString(R.string.no_note_history))
+        }
+    }
+
+    override fun onHistoryClick() {
+        mViewModel.fetchNoteVersions(note.id)
+    }
+
+    private fun showNoteVersionsDialog(noteVersions: List<Note>) {
+        val dialogView = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_note_versions, null)
+        val recyclerView = dialogView.findViewById<RecyclerView>(R.id.noteVersionsRecyclerView)
+        val layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.layoutManager = layoutManager
+        val adapter = NoteVersionsAdapter(noteVersions)
+        recyclerView.adapter = adapter
+        adapter.setListener(this)
+
+        AlertDialog.Builder(requireContext())
+            .setTitle(baseActivity!!.getString(R.string.note_versions))
+            .setView(dialogView)
+            .setPositiveButton(baseActivity!!.getString(R.string.close)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .show()
+    }
+
+    override fun onNoteItemClick(note: Note) {
+        showConfirmationDialog(note)
+    }
+    private fun showConfirmationDialog(noteVersion: Note) {
+        noteVersion.version = note.version!! +1
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(baseActivity!!.getString(R.string.return_version))
+        builder.setMessage(baseActivity!!.getString(R.string.return_version_check))
+        builder.setPositiveButton(baseActivity!!.getString(R.string.yes)) { dialog, which ->
+            mViewModel.updateNote(noteVersion)
+            //mViewModel.deleteVersionsAfter(note.id, note.version ?: 0)
+        }
+        builder.setNegativeButton(baseActivity!!.getString(R.string.no)) { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.show()
     }
 }

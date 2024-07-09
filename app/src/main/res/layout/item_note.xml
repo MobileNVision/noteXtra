@@ -17,24 +17,23 @@
         android:background="@drawable/round_white_item_background"
         android:onClick="@{()-> viewModel.onItemClick()}"
         app:onLongClickListener="@{viewModel.onLongClickListener}"
-        android:layout_marginLeft="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="20dp">
 
         <TextView
             android:id="@+id/note_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/title"
-            android:inputType="text"
             android:text="@{viewModel.note.title}"
             android:padding="10dp"
             android:textStyle="bold"
             android:textSize="24sp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
-            android:imeOptions="actionNext"
             android:textColor="?attr/colorEditTextIcon"
-            app:layout_constraintLeft_toRightOf="@id/category"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/category" />
         <TextView
@@ -68,7 +67,6 @@
             android:textColor="?attr/colorEditTextIcon"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/note_title"
-            app:layout_constraintVertical_bias="0" />
+            app:layout_constraintTop_toBottomOf="@id/note_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

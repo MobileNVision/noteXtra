@@ -3,14 +3,23 @@ package com.mobilenvision.notextra.utils
 import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
+import android.content.Intent
 import android.widget.RemoteViews
 import com.mobilenvision.notextra.R
 import com.mobilenvision.notextra.data.model.db.Note
 
 class NoteWidgetProvider : AppWidgetProvider() {
+
     override fun onUpdate(context: Context, appWidgetManager: AppWidgetManager, appWidgetIds: IntArray) {
         for (appWidgetId in appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId, null)
+            WidgetUpdateService.startActionUpdateWidget(context)
+        }
+    }
+
+    override fun onReceive(context: Context, intent: Intent) {
+        super.onReceive(context, intent)
+        if (intent.action == WidgetUpdateService.ACTION_UPDATE_WIDGET) {
+            WidgetUpdateService.startActionUpdateWidget(context)
         }
     }
 

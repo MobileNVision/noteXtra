@@ -20,4 +20,12 @@
             <parameter-binding android:key="noteText" android:value="@array/add_note_synonyms"/>
         </capability-binding>
     </shortcut>
+    <shortcut
+        android:shortcutId="add_reminder"
+        android:shortcutShortLabel="@string/add_reminder"
+        android:enabled="true">
+        <capability-binding android:key="actions.intent.ADD_REMINDER">
+            <parameter-binding android:key="noteText" android:value="@array/add_reminder_synonyms"/>
+        </capability-binding>
+    </shortcut>
 </shortcuts>

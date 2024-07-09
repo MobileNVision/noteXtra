@@ -6,7 +6,6 @@ interface MainNavigator {
     fun onSuccess(message: String)
     fun onError(message: String)
     fun onLogoutSuccess()
-    fun onSuccessAddNotes()
     fun onFailure(message: String?)
     fun setNote(result: Note)
 }

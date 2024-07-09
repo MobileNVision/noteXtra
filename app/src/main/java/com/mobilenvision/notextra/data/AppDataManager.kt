@@ -2,7 +2,6 @@ package com.mobilenvision.notextra.data
 
 
 import android.content.Context
-import com.google.gson.Gson
 import com.mobilenvision.notextra.data.local.db.DbCallback
 import com.mobilenvision.notextra.data.local.db.DbHelper
 import com.mobilenvision.notextra.data.local.prefs.PreferencesHelper
@@ -11,25 +10,13 @@ import com.mobilenvision.notextra.data.model.db.Note
 import com.mobilenvision.notextra.data.model.db.User
 import javax.inject.Inject
 
-class AppDataManager : DataManager {
+class AppDataManager @Inject constructor(
+    dbHelper: DbHelper,
+    preferencesHelper: PreferencesHelper,
+) : DataManager {
 
-    private var mGson: Gson
-    private var mPreferencesHelper: PreferencesHelper
-    private var mDbHelper: DbHelper
-    private var mContext: Context
-
-    @Inject
-    constructor(
-        context: Context,
-        dbHelper: DbHelper,
-        preferencesHelper: PreferencesHelper,
-        gson: Gson
-    ) {
-        mContext = context
-        mDbHelper = dbHelper
-        mPreferencesHelper = preferencesHelper
-        mGson = gson
-    }
+    private var mPreferencesHelper: PreferencesHelper = preferencesHelper
+    private var mDbHelper: DbHelper = dbHelper
 
 
     override fun getAllUsers(callback: DbCallback<List<User?>>) {
@@ -73,8 +60,8 @@ class AppDataManager : DataManager {
         mDbHelper.loadCategoryById(categoryIds,callback)
     }
 
-    override fun insertCategory(category: Category, callback: DbCallback<Boolean>) {
-        mDbHelper.insertCategory(category,callback)
+    override fun insertCategory(categoryName: Category, callback: DbCallback<Boolean>) {
+        mDbHelper.insertCategory(categoryName,callback)
     }
 
     override fun updateCategory(
@@ -143,6 +130,18 @@ class AppDataManager : DataManager {
 
     override fun setCurrentTheme(context: Context, currentTheme: String) {
         mPreferencesHelper.setCurrentTheme(context,currentTheme)
+    }
+
+    override fun getDeletedNoteIds(): MutableSet<String>? {
+        return mPreferencesHelper.getDeletedNoteIds()
+    }
+
+    override fun saveDeletedNoteId(noteId: String) {
+        mPreferencesHelper.saveDeletedNoteId(noteId)
+    }
+
+    override fun removeDeletedNoteId(noteId: String) {
+        mPreferencesHelper.removeDeletedNoteId(noteId)
     }
 
 }

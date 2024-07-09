@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="?attr/colorSplashBackground">
+    <TextView
+        android:id="@+id/minDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/start_day"
+        android:padding="8dp"
+        android:textColor="?attr/colorEditTextIcon"
+        android:textColorHint="?attr/colorTextHint"
+        android:background="@drawable/round_white_item_background"
+        android:gravity="center_vertical"
+        app:drawableRightCompat="@drawable/calendar" />
+
+    <TextView
+        android:id="@+id/maxDateTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/end_day"
+        android:padding="8dp"
+        android:textColor="?attr/colorEditTextIcon"
+        android:textColorHint="?attr/colorTextHint"
+        android:background="@drawable/round_white_item_background"
+        android:gravity="center_vertical"
+        app:drawableRightCompat="@drawable/calendar" />
+
+    <Spinner
+        android:id="@+id/spinner_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp" />
+
+    <TextView
+        android:id="@+id/priorityTextview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="@string/priority"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:layout_gravity="center"
+        android:textColor="?attr/colorEditTextIcon"
+        android:textColorHint="?attr/colorTextHint"
+        android:background="?attr/colorSplashBackground"
+
+        />
+    <RadioGroup
+        android:id="@+id/radioGroupPriority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RadioButton
+            android:id="@+id/radioButtonAny"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/any"
+            android:textColor="?attr/colorEditTextIcon"
+            android:backgroundTint="?attr/colorEditTextIcon"
+            android:buttonTint="?attr/colorEditTextIcon"
+            android:checked="true"
+            android:layout_weight="1" />
+        <RadioButton
+            android:id="@+id/radioButtonLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/low"
+            android:textColor="?attr/colorEditTextIcon"
+            android:backgroundTint="?attr/colorEditTextIcon"
+            android:buttonTint="?attr/colorEditTextIcon"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonMedium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/medium"
+            android:textColor="?attr/colorEditTextIcon"
+            android:backgroundTint="?attr/colorEditTextIcon"
+            android:buttonTint="?attr/colorEditTextIcon"
+            android:layout_weight="1"/>
+
+        <RadioButton
+            android:id="@+id/radioButtonHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/high"
+            android:textColor="?attr/colorEditTextIcon"
+            android:backgroundTint="?attr/colorEditTextIcon"
+            android:buttonTint="?attr/colorEditTextIcon"
+            android:layout_weight="1"/>
+    </RadioGroup>
+    <Button
+        android:id="@+id/filter_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rounded_gradient_button"
+        android:textColor="?attr/colorButtonText"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:layout_gravity="center"
+        android:onClick="@{() -> viewModel.onLoginClick()}"
+        android:text="@string/filter" />
+
+</LinearLayout>

@@ -21,7 +21,7 @@
     <string name="profile">Profil</string>
     <string name="save">Kaydet</string>
     <string name="add_reminder">Hatırlatıcı Ekle</string>
-    <string name="enter_note">Notunuzu giriniz...</string>
+    <string name="enter_note">Notunuzu giriniz…</string>
     <string name="empty_notes_message">Hiç not bulunamadı. Sağ alttaki düğmeye dokunarak yeni bir not ekleyebilirsiniz.</string>
     <string name="title">Başlık</string>
     <string name="add_note">Add note</string>
@@ -58,5 +58,19 @@
     <string name="low">Düşük</string>
     <string name="medium">Orta</string>
     <string name="high">Yüksek</string>
-    <string name="priority">Öncelik:</string>
+    <string name="priority">Önceliği:</string>
+    <string name="filter">Filtrele</string>
+    <string name="any">Hepsi</string>
+    <string name="speech_not_supported">Cihazınız bu özelliği desteklemiyor.</string>
+    <string name="speech_prompt" />
+    <string name="start_day">Başlangıç tarihi</string>
+    <string name="end_day">Bitiş tarihi</string>
+    <string name="empty_category">Kategori eklenmemiş.</string>
+    <string name="close">Kapat</string>
+    <string name="no_note_history">Note geçmişi yok.</string>
+    <string name="note_versions">Notun versiyonları</string>
+    <string name="return_version_check">Seçtiğiniz versiyona dönmek istediğinize emin misiniz?</string>
+    <string name="return_version">Versiyona Dön</string>
+    <string name="success_load">Not eklendi.</string>
+    <string name="delete_to_database_success">Not cihazdan başarıyla silindi.</string>
 </resources>

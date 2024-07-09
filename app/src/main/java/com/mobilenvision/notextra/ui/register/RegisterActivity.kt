@@ -49,7 +49,7 @@ class RegisterActivity @Inject constructor() : BaseActivity<ActivityRegisterBind
 
 
     override fun onRegisterSuccess() {
-        Toast.makeText(this, getString(R.string.register_success),Toast.LENGTH_SHORT)
+        showToastMessage(getString(R.string.register_success))
         val intent = Intent(this, LoginActivity::class.java).apply {
             putExtra("email", binding.email.text.toString())
             putExtra("password", binding.password.text.toString())
@@ -59,11 +59,11 @@ class RegisterActivity @Inject constructor() : BaseActivity<ActivityRegisterBind
     }
 
     override fun onRegisterFailure(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        showToastMessage(message)
     }
 
     override fun onImageUploadFailure(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        showToastMessage(message)
     }
 
     override fun onRegisterClick() {

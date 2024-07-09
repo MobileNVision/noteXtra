@@ -2,28 +2,22 @@ package com.mobilenvision.notextra.data.local.prefs
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.google.gson.Gson
-import com.google.gson.internal.`$Gson$Types`
 import com.mobilenvision.notextra.di.PreferenceInfo
-import java.lang.reflect.Type
 import javax.inject.Inject
 
-class AppPreferencesHelper : PreferencesHelper {
-    private var mContext: Context? = null
-
-    private var mGson: Gson? = null
+class AppPreferencesHelper @Inject constructor(
+    context: Context,
+    @PreferenceInfo prefFileName: String?
+) : PreferencesHelper {
 
     private var sharedPreferences: SharedPreferences? = null
 
     companion object {
-        private const val PREF_NAME = "MyAppPreferences"
         private const val KEY_REMEMBER_ME = "rememberMe"
         private const val KEY_USER_MAIL = "userMail"
         private const val KEY_USER_PASSWORD = "userPassword"
         private const val KEY_USER_ID = "userID"
-        private const val KEY_FIREBASE_TOKEN = "firebaseToken"
-        private const val ACCESS_TOKEN = "accessToken"
-        private const val ACCOUNT = "account"
+        private const val DELETED_NOTES = "deletedNotes"
         private const val UDKEY_CACHED_BRS_MOBILE_THEME = "UDKEY_CACHED_BRS_MOBILE_THEME"
 
     }
@@ -35,12 +29,9 @@ class AppPreferencesHelper : PreferencesHelper {
     override fun setCurrentTheme(context: Context, currentTheme: String) {
         sharedPreferences!!.edit().putString(UDKEY_CACHED_BRS_MOBILE_THEME, currentTheme).apply()
     }
-    
-    @Inject
-    constructor(context: Context, @PreferenceInfo prefFileName: String?, gson: Gson?){
-        mContext = context
+
+    init {
         sharedPreferences = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE)
-        mGson = gson
     }
     override fun setRememberMe(rememberMe: Boolean) {
         sharedPreferences!!.edit().putBoolean(KEY_REMEMBER_ME, rememberMe).apply()
@@ -74,6 +65,24 @@ class AppPreferencesHelper : PreferencesHelper {
             .remove(KEY_USER_ID)
             .apply()
     }
+    override fun saveDeletedNoteId(noteId: String) {
+        val editor = sharedPreferences!!.edit()
+        val deletedNotes = sharedPreferences!!.getStringSet(DELETED_NOTES, HashSet())
+        deletedNotes?.add(noteId)
+        editor.putStringSet(DELETED_NOTES, deletedNotes)
+        editor.apply()
+    }
 
+    override fun getDeletedNoteIds(): MutableSet<String>? {
+        return sharedPreferences!!.getStringSet(DELETED_NOTES, HashSet())
+    }
+
+    override fun removeDeletedNoteId(noteId: String) {
+        val editor = sharedPreferences!!.edit()
+        val deletedNotes = sharedPreferences!!.getStringSet(DELETED_NOTES, HashSet())
+        deletedNotes?.remove(noteId)
+        editor.putStringSet(DELETED_NOTES, deletedNotes)
+        editor.apply()
+    }
 
 }

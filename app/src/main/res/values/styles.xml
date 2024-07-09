@@ -24,9 +24,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorButton">@color/colorButton</item>
-        <item name="colorButtonDark">@color/colorTextHint</item>
+        <item name="colorButtonDark">@color/colorSplashLogo</item>
         <item name="colorButtonText">@color/colorEditTextIcon</item>
-        <item name="colorTextHint">@color/colorPrimaryDark</item>
+        <item name="colorTextHint">@color/colorButton</item>
         <item name="colorEditTextIcon">@color/colorEditTextIcon</item>
         <item name="colorStroke">@color/colorStroke</item>
         <item name="colorRoundItemBackground">@color/colorRoundItemBackground</item>

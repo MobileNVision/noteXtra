@@ -7,6 +7,7 @@ import android.app.DatePickerDialog
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.TimePickerDialog
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -14,10 +15,13 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
+import android.speech.RecognizerIntent
+import android.text.Editable
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import androidx.activity.addCallback
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.mobilenvision.notextra.BR
@@ -31,6 +35,8 @@ import com.mobilenvision.notextra.ui.notes.NotesFragment
 import com.mobilenvision.notextra.utils.CommonUtils
 import com.mobilenvision.notextra.utils.ReminderReceiver
 import java.util.Calendar
+import java.util.Locale
+import java.util.UUID
 import javax.inject.Inject
 
 
@@ -39,6 +45,7 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
     private lateinit var adapter: ArrayAdapter<String>
     private lateinit var categories: List<String>
     private var notePriority: String = "Low"
+    private var isTitle = false
 
     @Inject
     lateinit var viewModel: AddNoteViewModel
@@ -51,6 +58,7 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
         get() = BR.viewModel
     override val layoutId: Int
         get() = R.layout.fragment_add_note
+    private lateinit var speechRecognizerLauncher: ActivityResultLauncher<Intent>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +74,24 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
         binding.noteDescription.setText(note)
         selectedTime = arguments?.getString("reminderTime", "") ?: ""
 
+        speechRecognizerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val speechResult = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                if (!speechResult.isNullOrEmpty()) {
+                    val text = Editable.Factory.getInstance().newEditable(speechResult[0])
+                    if(isTitle) {
+                        binding.noteTitle.text = text
+
+                    }
+                    else{
+                        binding.noteDescription.text = text
+                    }
+                }
+            }
+        }
     }
 
     private fun handleOnBackPress() {
@@ -145,7 +171,7 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
     override fun onSaveClick() {
         val title = binding.noteTitle.text.toString()
         val description = binding.noteDescription.text.toString()
-        var category = "";
+        var category = ""
         if(binding.spinnerCategory.selectedItemPosition != 0){
         category = binding.spinnerCategory.selectedItem?.toString()!!
         }
@@ -153,15 +179,16 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
 
         if (description.isNotEmpty()) {
             note = Note(
+                noteId = UUID.randomUUID().toString(),
                 title = title.takeIf { it.isNotEmpty() },
                 text = description,
-                category = category.takeIf { it?.isNotEmpty() ?: true },
+                category = category.takeIf { it.isNotEmpty() },
                 reminderTime = selectedTime.takeIf { it.isNotEmpty() },
+                isSynchronized= false,
                 updatedTime = updatedTime,
                 version= 1,
                 userId = mViewModel.getUserData().third,
                 priority = notePriority
-
             )
             mViewModel.insertNote(note)
         } else {
@@ -170,8 +197,9 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
     }
 
     override fun onSuccessAddNote() {
-        if(!selectedTime.isNullOrEmpty()){
+        if(selectedTime.isNotEmpty()){
         requestExactAlarmPermission()}
+        showToast(baseActivity!!.getString(R.string.success_load))
         loadFragment(NotesFragment(), NotesFragment.TAG)
     }
 
@@ -215,6 +243,28 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
 
     override fun onSuccessAddNoteToDatabase() {
         showToast(baseActivity!!.getString(R.string.success_load_to_database))
+        loadFragment(NotesFragment(), NotesFragment.TAG)
+    }
+
+    override fun onTitleMicrophoneClick() {
+        isTitle = true
+        sendMicrophoneMessage()
+    }
+    private fun sendMicrophoneMessage(){
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt))
+        }
+        try {
+            speechRecognizerLauncher.launch(intent)
+        } catch (a: ActivityNotFoundException) {
+            showToast(baseActivity!!.getString(R.string.speech_not_supported))
+        }
+    }
+    override fun onNoteMicrophoneClick() {
+        isTitle = false
+        sendMicrophoneMessage()
     }
 
     private fun showDialog(isUpdate: Boolean) {

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.mobilenvision.notextra.ui.noteDetail.NoteVersionViewModel" />
+
+    </data>
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/round_white_item_background"
+    android:layout_margin="5dp"
+    android:onClick="@{()->viewModel.onItemClick()}">
+    <TextView
+        android:id="@+id/versionPriorityTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"
+        android:text="@{viewModel.formattedPriority}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/versionCategoryTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"
+        android:gravity="end"
+        android:text="@{viewModel.noteData.category}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/versionTitleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:text="@{viewModel.noteData.title}"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/versionCategoryTextView" />
+
+    <TextView
+        android:id="@+id/versionTextTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"
+        android:text="@{viewModel.noteData.text}"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/versionTitleTextView" />
+
+    <TextView
+        android:id="@+id/versionTimeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"
+        android:text="@{viewModel.noteData.updatedTime}"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/versionTextTextView" />
+
+    <TextView
+        android:id="@+id/versionTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:textColor="?attr/colorPrimaryDark"
+        android:text="@{viewModel.formattedVersion}"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/versionTextTextView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

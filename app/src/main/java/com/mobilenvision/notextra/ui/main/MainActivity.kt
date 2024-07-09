@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.mobilenvision.notextra.BR
 import com.mobilenvision.notextra.R
@@ -20,12 +19,12 @@ import com.mobilenvision.notextra.ui.login.LoginActivity
 import com.mobilenvision.notextra.ui.noteDetail.NoteDetailFragment
 import com.mobilenvision.notextra.ui.notes.NotesFragment
 import com.mobilenvision.notextra.ui.profile.ProfileFragment
-import com.mobilenvision.notextra.utils.CommonUtils
 import javax.inject.Inject
 
 
 class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, MainViewModel>(),
     MainNavigator {
+
     private lateinit var binding: ActivityMainBinding
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -40,10 +39,6 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
         mViewModel.setNavigator(this)
         binding.viewModel = mViewModel
         binding.lifecycleOwner = this
-        if(CommonUtils.isInternetAvailable(this)){
-            mViewModel.getUnSynchronizedNotes()
-        }
-
         loadFragment(NotesFragment(), NotesFragment.TAG)
         handleIntent(intent)
         binding.bottomNavigation.setOnItemSelectedListener {
@@ -90,12 +85,11 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
                 loadFragment(fragment, AddNoteFragment.TAG)
             }
         }
-        intent?.extras?.let { extras ->
+        intent.extras?.let { extras ->
             if (extras.containsKey("noteId")) {
                 val noteId = extras.getString("noteId", "-1")
                 if (noteId != "-1") {
                     mViewModel.getNote(noteId)
-
                 }
             }
         }
@@ -130,25 +124,23 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
     }
 
     override fun onLogoutSuccess() {
-        Toast.makeText(this, getString(R.string.logout_success), Toast.LENGTH_SHORT)
+        showToastMessage(getString(R.string.logout_success))
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    override fun onSuccessAddNotes() {
-        showToastMessage(getString(R.string.synchronized_success))
-    }
 
     override fun onFailure(message: String?) {
         showToastMessage(message!!)
     }
 
-    override fun setNote(note: Note) {
-        val fragment = NoteDetailFragment.newInstance(note)
+    override fun setNote(result: Note) {
+        val fragment = NoteDetailFragment.newInstance(result)
         supportFragmentManager.beginTransaction()
             .replace(R.id.container, fragment)
             .addToBackStack(null)
             .commit()
     }
+
 }

@@ -19,12 +19,13 @@
         android:background="?attr/colorSplashBackground">
 
 
+
         <EditText
             android:id="@+id/note_title"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:hint="@string/title"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:padding="10dp"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
@@ -43,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:layout_marginRight="5dp"
+            android:layout_marginEnd="5dp"
             android:textColor="?attr/colorEditTextIcon"
             android:textColorHint="?attr/colorTextHint"
             android:background="?attr/colorSplashBackground"
@@ -86,8 +87,8 @@
             android:id="@+id/btn_edit_category"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/edit"
-            android:layout_marginRight="20dp"
+            android:background="@drawable/edit_category"
+            android:layout_marginEnd="20dp"
             android:onClick="@{() -> viewModel.onEditCategoryClick()}"
             app:layout_constraintBottom_toBottomOf="@id/spinner_category"
             app:layout_constraintEnd_toStartOf="@id/btn_add_category"
@@ -99,7 +100,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:background="@drawable/add"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="20dp"
             android:onClick="@{() -> viewModel.onAddCategoryClick()}"
             app:layout_constraintBottom_toBottomOf="@id/spinner_category"
             app:layout_constraintEnd_toStartOf="@id/btn_delete_category"
@@ -110,8 +111,8 @@
             android:id="@+id/btn_delete_category"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/delete"
-            android:layout_marginRight="20dp"
+            android:background="@drawable/delete_category"
+            android:layout_marginEnd="20dp"
             android:onClick="@{() -> viewModel.onDeleteCategoryClick()}"
             app:layout_constraintBottom_toBottomOf="@id/spinner_category"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,15 +136,15 @@
 
         <Button
             android:id="@+id/btn_edit_note"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:layout_marginTop="20dp"
             android:textAllCaps="false"
-            android:background="@drawable/edit_button"
+            android:background="@drawable/save_button"
             android:textStyle="bold"
             android:layout_margin="20dp"
             android:onClick="@{() -> viewModel.onEditClick()}"
-            app:layout_constraintEnd_toStartOf="@id/btn_delete_note"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
@@ -155,7 +156,7 @@
             android:textColor="?attr/colorEditTextIcon"
             android:textColorHint="?attr/colorTextHint"
             android:background="?attr/colorSplashBackground"
-            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
             app:layout_constraintTop_toTopOf="@id/radioGroupPriority"
             app:layout_constraintBottom_toBottomOf="@id/radioGroupPriority"
             app:layout_constraintStart_toStartOf="parent"
@@ -165,11 +166,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginLeft="80dp"
+            android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toEndOf="@id/priorityTextview"
             app:layout_constraintTop_toBottomOf="@id/spinner_category"
-            android:layout_marginRight="20dp">
+            android:layout_marginEnd="20dp">
 
             <RadioButton
                 android:id="@+id/radioButtonLow"
@@ -204,17 +205,27 @@
         </RadioGroup>
 
         <Button
+            android:id="@+id/btn_history_note"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="@{() -> viewModel.onHistoryClick()}"
+            app:layout_constraintTop_toTopOf="@id/btn_edit_note"
+            app:layout_constraintBottom_toBottomOf="@id/btn_edit_note"
+            app:layout_constraintEnd_toStartOf="@id/btn_edit_note"
+            android:background="@drawable/history" />
+
+        <Button
             android:id="@+id/btn_delete_note"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginTop="20dp"
             android:textAllCaps="false"
             android:background="@drawable/delete_button"
             android:textStyle="bold"
-            android:layout_margin="20dp"
+            android:layout_marginEnd="20dp"
             android:onClick="@{() -> viewModel.onDeleteClick()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/btn_history_note"
+            app:layout_constraintBottom_toBottomOf="@id/btn_history_note"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

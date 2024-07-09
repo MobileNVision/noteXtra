@@ -1,14 +1,13 @@
 package com.mobilenvision.notextra.ui.notes
 
-import com.mobilenvision.notextra.data.model.db.Note
-import com.mobilenvision.notextra.databinding.ItemNoteBinding
-import com.mobilenvision.notextra.ui.base.BaseViewHolder
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.mobilenvision.notextra.data.model.db.Note
+import com.mobilenvision.notextra.databinding.ItemNoteBinding
+import com.mobilenvision.notextra.ui.base.BaseViewHolder
 
 class NotesAdapter() : RecyclerView.Adapter<BaseViewHolder>() {
     private lateinit var mNoteAdapterListener: NoteAdapterListener
@@ -39,7 +38,7 @@ class NotesAdapter() : RecyclerView.Adapter<BaseViewHolder>() {
 
 
     override fun getItemCount(): Int {
-        return if (!mNoteList.isNullOrEmpty()) {
+        return if (mNoteList.isNotEmpty()) {
             mNoteList.size
         } else {
             0
@@ -52,7 +51,6 @@ class NotesAdapter() : RecyclerView.Adapter<BaseViewHolder>() {
 
     fun addItems(note: List<Note>) {
         mNoteList = note
-        Log.d("NotesAdapter", "Notlar eklendi: $mNoteList")
         notifyDataSetChanged()
     }
 
@@ -79,20 +77,16 @@ class NotesAdapter() : RecyclerView.Adapter<BaseViewHolder>() {
         }
 
         override fun onNoteItemClick(note: Note) {
-            if (note != null && mNoteAdapterListener != null) {
-                mNoteAdapterListener!!.onNoteItemClick(note)
-            }
+            mNoteAdapterListener!!.onNoteItemClick(note)
         }
 
         override fun onNoteItemLongClick(view: View, note: Note) {
             selectedPosition = adapterPosition
-            mNoteAdapterListener?.onNoteItemLongClick(view, note)
+            mNoteAdapterListener.onNoteItemLongClick(view, note)
         }
 
         override fun onItemCategoryClick(note: Note) {
-            if (note != null && mNoteAdapterListener != null) {
-                mNoteAdapterListener!!.onItemCategoryClick(note)
-            }
+            mNoteAdapterListener.onItemCategoryClick(note)
         }
     }
     interface NoteAdapterListener {

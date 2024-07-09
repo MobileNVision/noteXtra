@@ -1,13 +1,11 @@
 package com.mobilenvision.notextra.data.model.db
 
-import androidx.annotation.NonNull
-import com.mobilenvision.notextra.data.local.db.NoteTypeConverters
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
+import com.mobilenvision.notextra.data.local.db.NoteTypeConverters
 import java.io.Serializable
-import java.util.UUID
 
 @TypeConverters(NoteTypeConverters::class)
 @Entity(tableName = "notes")
@@ -16,35 +14,40 @@ class Note : Serializable {
     var createdAt: String? = null
 
     @PrimaryKey
-    @NonNull
-    var id: String = UUID.randomUUID().toString()
+    var id: String = ""
     var text: String? = null
     var updatedTime: String? = null
     var title: String? = null
     var isSynchronized: Boolean? = false
     var category: String? = null
-    var version: Int? = null
+    var version: Long? = null
     var userId: String? = null
     var priority: String? = null
+    var reminderTime: String? = null
 
     @ColumnInfo(name = "updated_at")
     var updatedAt: String? = null
-    @ColumnInfo(name = "reminder_time")
-    var reminderTime: String? = null
+    constructor()
+
+    constructor(title: String, text: String, id: String){
+        this.id = id
+        this.title = title
+        this.text = text
+    }
 
     constructor(
+        noteId: String,
         title: String?,
         text: String,
         category: String?,
         reminderTime: String?,
         isSynchronized: Boolean? = false,
         updatedTime: String,
-        version: Int?,
+        version: Long?,
         userId: String?,
         priority: String?
     ) {
-        this.createdAt = createdAt
-        this.id = id
+        this.id=noteId
         this.text = text
         this.updatedTime = updatedTime
         this.title = title

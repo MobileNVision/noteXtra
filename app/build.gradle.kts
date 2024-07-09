@@ -101,4 +101,5 @@ dependencies {
     implementation ("com.google.firebase:firebase-storage:20.0.0")
     implementation ("androidx.work:work-runtime-ktx:2.7.1")
     androidTestImplementation ("com.google.assistant.appactions:testing:1.0.0")
+    implementation ("androidx.core:core-google-shortcuts:1.0.1")
 }

@@ -13,6 +13,7 @@ class LoginViewModel(dataManager: DataManager) : BaseViewModel<LoginNavigator>(d
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     fun checkCredentials(email: String, password: String) {
+        isBaseLoading.set(true)
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -28,7 +29,7 @@ class LoginViewModel(dataManager: DataManager) : BaseViewModel<LoginNavigator>(d
                                 val lastName = document.getString("lastName")
                                 val email = document.getString("email")
                                 val profileImageUrl = document.getString("profileImageUrl")
-                                var mUser = User(
+                                val mUser = User(
                                     userId,
                                     firstName!!,
                                     lastName,
@@ -42,10 +43,12 @@ class LoginViewModel(dataManager: DataManager) : BaseViewModel<LoginNavigator>(d
 
                         }
                     else{
+                        isBaseLoading.set(false)
                         navigator?.onUserLoggedIn(userId)
                     }
                 }
             else {
+                    isBaseLoading.set(false)
                     navigator?.onLoginFailed(task.exception?.message ?: "Login failed")
                 }
             }
@@ -55,9 +58,11 @@ class LoginViewModel(dataManager: DataManager) : BaseViewModel<LoginNavigator>(d
         dataManager.insertUser(mUser, object : DbCallback<Boolean> {
             override fun onSuccess(result: Boolean) {
                 navigator?.onUserLoggedIn(mUser.id)
+                isBaseLoading.set(false)
             }
 
             override fun onError(error: Throwable) {
+                isBaseLoading.set(false)
                 error.message?.let { navigator?.onLoginFailed(it) }
             }
         })
@@ -76,9 +81,6 @@ class LoginViewModel(dataManager: DataManager) : BaseViewModel<LoginNavigator>(d
 
     fun onLoginClick(){
         navigator?.onLoginClick()
-    }
-    fun appNameClick(){
-        navigator?.appNameClick()
     }
 
     fun onRegisterClick(){

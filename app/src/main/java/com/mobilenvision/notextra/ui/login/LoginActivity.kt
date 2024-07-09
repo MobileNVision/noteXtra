@@ -54,7 +54,7 @@ class LoginActivity @Inject constructor() : BaseActivity<ActivityLoginBinding, L
         }
         if (mViewModel.getRememberMe()) {
             binding.rememberMe.isChecked = true
-            val (userMail, userPassword, id) = mViewModel.getUserData()
+            val (userMail, userPassword, _) = mViewModel.getUserData()
 
             if (!userMail.isNullOrEmpty() && !userPassword.isNullOrEmpty()) {
                 binding.email.setText(userMail)
@@ -133,10 +133,6 @@ class LoginActivity @Inject constructor() : BaseActivity<ActivityLoginBinding, L
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
     }
 
-    override fun appNameClick() {
-        mViewModel.changeTheme(this)
-        recreate()
-    }
 
     private fun register() {
         val intent = Intent(this, RegisterActivity::class.java)

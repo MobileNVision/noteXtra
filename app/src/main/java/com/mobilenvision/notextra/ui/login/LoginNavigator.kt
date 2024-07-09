@@ -8,5 +8,4 @@ interface LoginNavigator {
     fun onRegisterClick()
     fun onRegistrationSuccess()
     fun onRegistrationFailed(s: String)
-    fun appNameClick()
 }

@@ -11,4 +11,8 @@ interface PreferencesHelper {
     fun clearUserData()
     fun getCurrentTheme(context: Context): String
     fun setCurrentTheme(context: Context, currentTheme: String)
+
+    fun getDeletedNoteIds(): MutableSet<String>?
+    fun saveDeletedNoteId(noteId: String)
+    fun removeDeletedNoteId(noteId: String)
 }

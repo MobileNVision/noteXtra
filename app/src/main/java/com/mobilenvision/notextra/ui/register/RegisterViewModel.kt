@@ -19,35 +19,43 @@ class RegisterViewModel(dataManager: DataManager) : BaseViewModel<RegisterNaviga
         navigator?.onBackClick()
     }
     fun registerUser(email: String, password: String, firstName: String, lastName: String, imageUri: Uri?) {
+        isBaseLoading.set(true)
         if (email.isNotEmpty() && password.isNotEmpty() && firstName.isNotEmpty() && lastName.isNotEmpty() && imageUri != null) {
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        isBaseLoading.set(false)
                         uploadProfileImage(firstName, lastName, email, imageUri)
                     } else {
+                        isBaseLoading.set(false)
                         navigator?.onRegisterFailure(task.exception?.message ?: "Registration failed")
                     }
                 }
         } else {
-            navigator?.onRegisterFailure("Please fill all fields and select an image")
+            isBaseLoading.set(false)
+            navigator?.onRegisterFailure("Lütfen tüm alanları doldurunuz ve fotoğraf seçiniz")
         }
     }
 
     private fun uploadProfileImage(firstName: String, lastName: String, email: String, imageUri: Uri) {
+        isBaseLoading.set(true)
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val ref = FirebaseStorage.getInstance().reference.child("profile_images/$userId")
         ref.putFile(imageUri)
             .addOnSuccessListener {
                 ref.downloadUrl.addOnSuccessListener { uri ->
+                    isBaseLoading.set(false)
                     saveUserToFirestore(firstName, lastName, email, uri.toString())
                 }
             }
             .addOnFailureListener { e ->
+                isBaseLoading.set(false)
                 navigator?.onImageUploadFailure(e.message ?: "Failed to upload image")
             }
     }
 
     private fun saveUserToFirestore(firstName: String, lastName: String, email: String, profileImageUrl: String) {
+        isBaseLoading.set(true)
         val user = hashMapOf(
             "firstName" to firstName,
             "lastName" to lastName,
@@ -58,9 +66,11 @@ class RegisterViewModel(dataManager: DataManager) : BaseViewModel<RegisterNaviga
         FirebaseFirestore.getInstance().collection("users").document(userId)
             .set(user)
             .addOnSuccessListener {
+                isBaseLoading.set(false)
                 navigator?.onRegisterSuccess()
             }
             .addOnFailureListener { e ->
+                isBaseLoading.set(false)
                 navigator?.onRegisterFailure(e.message ?: "Failed to save user")
             }
     }

@@ -15,4 +15,6 @@ interface AddNoteNavigator {
     fun onDeleteCategoryClick()
     fun onSuccessDeleteCategory()
     fun onSuccessAddNoteToDatabase()
+    fun onTitleMicrophoneClick()
+    fun onNoteMicrophoneClick()
 }

@@ -37,7 +37,7 @@ class AddNoteViewModel (dataManager: DataManager) : BaseViewModel<AddNoteNavigat
         navigator?.onDeleteCategoryClick()
     }
     fun getCategory(){
-        dataManager?.getAllCategories(object : DbCallback<List<Category>> {
+        dataManager.getAllCategories(object : DbCallback<List<Category>> {
             override fun onSuccess(result: List<Category>) {
                 categoryList.clear()
                 categoryList.addAll(result)
@@ -46,6 +46,7 @@ class AddNoteViewModel (dataManager: DataManager) : BaseViewModel<AddNoteNavigat
                     navigator?.setCategoryList(categoryList)
                 }
             }
+
             override fun onError(error: Throwable) {
                 navigator?.onFailure(error.message)
             }
@@ -115,15 +116,34 @@ class AddNoteViewModel (dataManager: DataManager) : BaseViewModel<AddNoteNavigat
         notesCollection.document(note.id)
             .set(CommonUtils.noteToMap(note))
             .addOnSuccessListener {
-                navigator?.onSuccessAddNote()
+                updateIsSynchronized(note.id)
             }
             .addOnFailureListener { e ->
                 navigator?.onFailure(e.message)
             }
 }
 
+    private fun updateIsSynchronized(id: String) {
+        dataManager.updateIsSynchronized(id,true, object : DbCallback<Boolean> {
+            override fun onSuccess(result: Boolean) {
+                navigator?.onSuccessAddNote()
+            }
+            override fun onError(error: Throwable) {
+                navigator?.onFailure(error.message)
+            }
+        })
+    }
+
     fun setIsInternetAvailable(internetAvailability: Boolean) {
         isInternetAvailable = internetAvailability
+    }
+
+    fun onTitleMicrophoneClick(){
+        navigator?.onTitleMicrophoneClick()
+    }
+
+    fun onNoteMicrophoneClick(){
+        navigator?.onNoteMicrophoneClick()
     }
 
 }
