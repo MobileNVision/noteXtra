@@ -1,12 +1,19 @@
 package com.mobilenvision.notextra.ui.main
 
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.text.Editable
 import android.util.Log
+import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.mobilenvision.notextra.BR
 import com.mobilenvision.notextra.R
@@ -19,6 +26,7 @@ import com.mobilenvision.notextra.ui.login.LoginActivity
 import com.mobilenvision.notextra.ui.noteDetail.NoteDetailFragment
 import com.mobilenvision.notextra.ui.notes.NotesFragment
 import com.mobilenvision.notextra.ui.profile.ProfileFragment
+import java.util.Locale
 import javax.inject.Inject
 
 
@@ -30,6 +38,7 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
         get() = BR.viewModel
     override val layoutId: Int
         get() = R.layout.activity_main
+    private lateinit var speechRecognizerLauncher: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +66,33 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
             }
         }
         createNotificationChannel()
+        speechRecognizerLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+                val speechResult = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                if (!speechResult.isNullOrEmpty()) {
+                    val text = Editable.Factory.getInstance().newEditable(speechResult[0])
+                    val fragment = AddNoteFragment.newInstance(text.toString(), "")
+                    loadFragment(fragment, AddNoteFragment.TAG)
+                }
+            }
+        }
+        supportFragmentManager.addOnBackStackChangedListener {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
+            if (currentFragment != null) {
+                when (currentFragment.tag) {
+                    NoteDetailFragment.TAG -> {
+                        binding.microphoneLayout.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.microphoneLayout.visibility = View.VISIBLE
+                    }
+                }
+            }
+        }
+
     }
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -136,11 +172,22 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
     }
 
     override fun setNote(result: Note) {
-        val fragment = NoteDetailFragment.newInstance(result)
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, fragment)
-            .addToBackStack(null)
-            .commit()
+        loadFragment(NoteDetailFragment.newInstance(result), NoteDetailFragment.TAG)
     }
 
+    override fun onMicrophoneClick() {
+        sendMicrophoneMessage()
+    }
+    private fun sendMicrophoneMessage(){
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.speech_prompt))
+        }
+        try {
+            speechRecognizerLauncher.launch(intent)
+        } catch (a: ActivityNotFoundException) {
+            showToastMessage(getString(R.string.speech_not_supported))
+        }
+    }
 }

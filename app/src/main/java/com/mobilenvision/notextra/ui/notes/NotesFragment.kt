@@ -115,7 +115,7 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
     override fun onNoteItemClick(note: Note) {
         hideBottomNavigation()
         hideToolbar()
-        baseActivity?.loadFragment(NoteDetailFragment.newInstance(note), TAG)
+        baseActivity?.loadFragment(NoteDetailFragment.newInstance(note), NoteDetailFragment.TAG)
     }
 
     override fun onNoteItemLongClick(view: View, note: Note) {
@@ -196,7 +196,7 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
         return Uri.parse(path)
     }
     private fun updateNote(note: Note) {
-        baseActivity?.loadFragment(NoteDetailFragment.newInstance(note), TAG)
+        baseActivity?.loadFragment(NoteDetailFragment.newInstance(note), NoteDetailFragment.TAG)
     }
 
     private fun deleteNote(note: Note) {
@@ -278,11 +278,23 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
     }
 
     private fun setupRecyclerView() {
-        binding.notesRecyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
         notesAdapter = NotesAdapter(emptyList())
+        val gridLayoutManager = GridLayoutManager(baseActivity!!, 2)
+        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                val note = notesAdapter.getItem(position)
+                return if (note != null && (note.title?.length ?: 0 > 100 || note.text?.length ?: 0 > 200)) {
+                    2
+                } else {
+                    1
+                }
+            }
+        }
+        binding.notesRecyclerView.layoutManager = gridLayoutManager
         binding.notesRecyclerView.adapter = notesAdapter
         notesAdapter.setListener(this)
         notesAdapter.setContext(requireContext())
+
     }
     override fun performDependencyInjection(buildComponent: FragmentComponent) {
         buildComponent.inject(this)

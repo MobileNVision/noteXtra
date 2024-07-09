@@ -8,4 +8,5 @@ interface MainNavigator {
     fun onLogoutSuccess()
     fun onFailure(message: String?)
     fun setNote(result: Note)
+    fun onMicrophoneClick()
 }

@@ -70,10 +70,6 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
         mViewModel.getCategory()
         mViewModel.setIsInternetAvailable(CommonUtils.isInternetAvailable(baseActivity!!))
 
-        val note = arguments?.getString("note", "") ?: ""
-        binding.noteDescription.setText(note)
-        selectedTime = arguments?.getString("reminderTime", "") ?: ""
-
         speechRecognizerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -122,6 +118,9 @@ class AddNoteFragment : BaseFragment<FragmentAddNoteBinding, AddNoteViewModel>()
             handleOnBackPress()
         }
         setupPriorityRadioButtons()
+        val note = arguments?.getString("note", "") ?: ""
+        binding.noteDescription.setText(note)
+        selectedTime = arguments?.getString("reminderTime", "") ?: ""
     }
     override fun performDependencyInjection(buildComponent: FragmentComponent) {
         buildComponent.inject(this)

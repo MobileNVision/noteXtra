@@ -35,7 +35,7 @@
             android:id="@+id/logout"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="10dp"
             android:onClick="@{()-> viewModel.onLogoutClick()}"
@@ -67,6 +67,23 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:visibility="@{viewModel.isBaseLoading ? View.VISIBLE : View.GONE}" />
+
+        <RelativeLayout
+            android:id="@+id/microphone_layout"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/round_white_item_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:onClick="@{()-> viewModel.onMicrophoneClick()}"
+            app:layout_constraintBottom_toTopOf="@id/bottom_navigation" >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/microphone"/>
+        </RelativeLayout>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

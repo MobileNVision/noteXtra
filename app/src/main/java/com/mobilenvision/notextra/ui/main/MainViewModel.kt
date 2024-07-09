@@ -18,6 +18,10 @@ class MainViewModel(dataManager: DataManager) : BaseViewModel<MainNavigator>(dat
         setIsLoading(false)
     }
 
+    fun onMicrophoneClick(){
+        navigator?.onMicrophoneClick()
+    }
+
     fun getNote(noteId: String) {
         dataManager.loadNoteById(noteId, object : DbCallback<Note> {
             override fun onSuccess(result: Note) {

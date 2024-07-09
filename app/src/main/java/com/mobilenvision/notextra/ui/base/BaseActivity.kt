@@ -107,7 +107,8 @@ abstract class BaseActivity<T : ViewDataBinding?, V : BaseViewModel<*>> :
                 fragment,
                 fragmentTag
             )
-            .commitNow()
+            .addToBackStack(fragmentTag)
+            .commit()
     }
     fun showToastMessage(message: String) {
         runOnUiThread {
@@ -140,15 +141,11 @@ abstract class BaseActivity<T : ViewDataBinding?, V : BaseViewModel<*>> :
     }
     fun showToolbar() {
         val toolbar: RelativeLayout = findViewById(R.id.toolbar)
-        if (toolbar != null) {
-            toolbar.visibility = View.VISIBLE
-        }
+        toolbar.visibility = View.VISIBLE
     }
     fun hideToolbar() {
         val toolbar: RelativeLayout = findViewById(R.id.toolbar)
-        if (toolbar != null) {
-            toolbar.visibility = View.GONE
-        }
+        toolbar.visibility = View.GONE
     }
     fun setAppTheme(currentTheme: String?) {
         when (currentTheme) {

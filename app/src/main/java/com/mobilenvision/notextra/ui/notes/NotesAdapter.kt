@@ -61,6 +61,12 @@ class NotesAdapter() : RecyclerView.Adapter<BaseViewHolder>() {
         this.context = context
     }
 
+    fun getItem(position: Int): Note? {
+        if (position < mNoteList.size) {
+            return mNoteList[position]
+        }
+        return null
+    }
     inner class ItemViewHolder(binding: ItemNoteBinding) : BaseViewHolder(binding.root),
         NoteItemViewModel.NoteItemViewModelListener {
         private val mBinding: ItemNoteBinding
@@ -77,7 +83,7 @@ class NotesAdapter() : RecyclerView.Adapter<BaseViewHolder>() {
         }
 
         override fun onNoteItemClick(note: Note) {
-            mNoteAdapterListener!!.onNoteItemClick(note)
+            mNoteAdapterListener.onNoteItemClick(note)
         }
 
         override fun onNoteItemLongClick(view: View, note: Note) {
