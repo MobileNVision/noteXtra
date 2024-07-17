@@ -33,4 +33,7 @@ class MainViewModel(dataManager: DataManager) : BaseViewModel<MainNavigator>(dat
         })
     }
 
+    fun onBackClick(){
+        navigator?.onBackClick()
+    }
 }

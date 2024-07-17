@@ -4,9 +4,10 @@
         <shape android:shape="rectangle">
             <gradient
                 android:angle="90"
-                android:startColor="?attr/colorButtonDark"
-                android:centerColor="?attr/colorTextHint"
-                android:endColor="?attr/colorButtonDark" />
+                android:startColor="?attr/colorButtonTop"
+                android:centerColor="?attr/colorButtonCenter"
+                android:endColor="?attr/colorButtonTop"
+                />
             <corners android:radius="10dp" />
         </shape>
     </item>

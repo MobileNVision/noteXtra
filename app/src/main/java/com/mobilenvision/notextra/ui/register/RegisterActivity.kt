@@ -81,7 +81,6 @@ class RegisterActivity @Inject constructor() : BaseActivity<ActivityRegisterBind
     }
     override fun onImageClick() {
         imagePickerLauncher.launch("image/*")
-
     }
 
     override fun onBackClick() {

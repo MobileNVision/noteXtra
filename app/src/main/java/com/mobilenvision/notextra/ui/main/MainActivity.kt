@@ -17,11 +17,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import com.mobilenvision.notextra.BR
 import com.mobilenvision.notextra.R
+import com.mobilenvision.notextra.data.model.db.Daily
 import com.mobilenvision.notextra.data.model.db.Note
 import com.mobilenvision.notextra.databinding.ActivityMainBinding
 import com.mobilenvision.notextra.di.component.ActivityComponent
+import com.mobilenvision.notextra.ui.addDaily.AddDailyFragment
+import com.mobilenvision.notextra.ui.addDaily.FullScreenImageDialogFragment
 import com.mobilenvision.notextra.ui.addNote.AddNoteFragment
 import com.mobilenvision.notextra.ui.base.BaseActivity
+import com.mobilenvision.notextra.ui.daily.DailyAdapter
+import com.mobilenvision.notextra.ui.daily.DailyFragment
 import com.mobilenvision.notextra.ui.login.LoginActivity
 import com.mobilenvision.notextra.ui.noteDetail.NoteDetailFragment
 import com.mobilenvision.notextra.ui.notes.NotesFragment
@@ -31,8 +36,9 @@ import javax.inject.Inject
 
 
 class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, MainViewModel>(),
-    MainNavigator {
+    MainNavigator, DailyAdapter.DailyAdapterListener {
 
+    private var isDaily: Boolean = false
     private lateinit var binding: ActivityMainBinding
     override val bindingVariable: Int
         get() = BR.viewModel
@@ -60,6 +66,10 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
                     loadFragment(ProfileFragment(),ProfileFragment.TAG)
                     true
                 }
+                R.id.daily -> {
+                    loadFragment(DailyFragment(),DailyFragment.TAG)
+                    true
+                }
                 else -> {
                     false
                 }
@@ -74,8 +84,14 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
                 val speechResult = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                 if (!speechResult.isNullOrEmpty()) {
                     val text = Editable.Factory.getInstance().newEditable(speechResult[0])
-                    val fragment = AddNoteFragment.newInstance(text.toString(), "")
-                    loadFragment(fragment, AddNoteFragment.TAG)
+                    if(isDaily){
+                        val fragment = AddDailyFragment.newInstance(text.toString(), "")
+                        loadFragment(fragment, AddDailyFragment.TAG)
+                    }
+                    else{
+                        val fragment = AddNoteFragment.newInstance(text.toString(), "")
+                        loadFragment(fragment, AddNoteFragment.TAG)
+                    }
                 }
             }
         }
@@ -83,17 +99,30 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
             val currentFragment = supportFragmentManager.findFragmentById(R.id.container)
             if (currentFragment != null) {
                 when (currentFragment.tag) {
+                    NotesFragment.TAG -> {
+                        binding.microphoneLayout.visibility = View.VISIBLE
+                        isDaily=false
+                    }
+                    DailyFragment.TAG -> {
+                        binding.microphoneLayout.visibility = View.VISIBLE
+                        isDaily=true
+                    }
                     NoteDetailFragment.TAG -> {
                         binding.microphoneLayout.visibility = View.GONE
+                        binding.bottomNavigation.visibility = View.GONE
+                    }
+                    AddNoteFragment.TAG -> {
+                        binding.bottomNavigation.visibility = View.GONE
                     }
                     else -> {
-                        binding.microphoneLayout.visibility = View.VISIBLE
+                        binding.microphoneLayout.visibility = View.GONE
                     }
                 }
             }
         }
-
     }
+
+
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "Reminder Channel"
@@ -178,6 +207,11 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
     override fun onMicrophoneClick() {
         sendMicrophoneMessage()
     }
+
+    override fun onBackClick() {
+        onBackPressedDispatcher.onBackPressed()
+    }
+
     private fun sendMicrophoneMessage(){
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
             putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -189,5 +223,14 @@ class MainActivity @Inject constructor() : BaseActivity<ActivityMainBinding, Mai
         } catch (a: ActivityNotFoundException) {
             showToastMessage(getString(R.string.speech_not_supported))
         }
+    }
+
+    override fun onDailyItemClick(daily: Daily) {
+
+    }
+
+    override fun onImagesItemClick(imageUrl: String) {
+        FullScreenImageDialogFragment.newInstance(imageUrl)
+            .show(supportFragmentManager, "FullScreenImageDialogFragment")
     }
 }

@@ -14,6 +14,8 @@ import com.mobilenvision.notextra.ui.base.BaseFragment
 import javax.inject.Inject
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>(), ProfileNavigator {
+    private var font: String = ""
+
     @Inject
     lateinit var viewModel: ProfileViewModel
     private lateinit var binding: FragmentProfileBinding
@@ -47,7 +49,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         baseActivity!!.onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             handleOnBackPress()
         }
+        when (mViewModel.getFont()) {
+            "handwriting" -> binding.radioGroupFonts.check(R.id.radioHandwriting)
+            "anandablack" -> binding.radioGroupFonts.check(R.id.radioAnandaBlack)
+            "shiftynotes" -> binding.radioGroupFonts.check(R.id.radioShiftyNotes)
+            else -> binding.radioGroupFonts.clearCheck()
+        }
+        setupPriorityRadioButtons()
+    }
+    private fun setupPriorityRadioButtons() {
+        binding.radioHandwriting.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked)  font = "handwriting"
+        }
 
+        binding.radioAnandaBlack.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) font = "anandablack"
+        }
+
+        binding.radioShiftyNotes.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) font = "shiftynotes"
+        }
     }
 
     override fun performDependencyInjection(buildComponent: FragmentComponent) {
@@ -61,9 +82,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         val selectedTheme = if (isChecked) "DARK_THEME" else "LIGHT_THEME"
         if(currentTheme != selectedTheme) {
             mViewModel.setCurrentTheme(baseActivity!!, selectedTheme)
-            baseActivity?.recreate()
         }
+        mViewModel.setFont(font)
         mViewModel.getUserForUpdate(binding.firstName.text.toString(),binding.lastName.text.toString(),selectedImageUri)
+        baseActivity?.recreate()
     }
     private val imagePickerLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         uri?.let {

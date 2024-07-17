@@ -28,6 +28,7 @@ import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -127,6 +128,9 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
         }
 
         val alertDialog = dialogBuilder.create()
+        dialogView.findViewById<ConstraintLayout>(R.id.dialog_list_menu_layout).setOnClickListener {
+            alertDialog.dismiss()
+        }
 
         dialogView.findViewById<TextView>(R.id.delete).setOnClickListener {
             alertDialog.dismiss()
@@ -299,7 +303,7 @@ class NotesFragment : BaseFragment<FragmentNotesBinding, NotesViewModel>(), Note
     }
 
     override fun addNoteButtonClick() {
-        baseActivity?.loadFragment(AddNoteFragment.newInstance("",""), TAG)
+        baseActivity?.loadFragment(AddNoteFragment.newInstance("",""), AddNoteFragment.TAG)
 
     }
 

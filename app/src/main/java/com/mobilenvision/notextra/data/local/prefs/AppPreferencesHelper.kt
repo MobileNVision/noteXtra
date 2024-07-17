@@ -18,6 +18,8 @@ class AppPreferencesHelper @Inject constructor(
         private const val KEY_USER_PASSWORD = "userPassword"
         private const val KEY_USER_ID = "userID"
         private const val DELETED_NOTES = "deletedNotes"
+        private const val DELETED_DAILY = "deleteDaily"
+        private const val FONT = "font"
         private const val UDKEY_CACHED_BRS_MOBILE_THEME = "UDKEY_CACHED_BRS_MOBILE_THEME"
 
     }
@@ -28,6 +30,15 @@ class AppPreferencesHelper @Inject constructor(
 
     override fun setCurrentTheme(context: Context, currentTheme: String) {
         sharedPreferences!!.edit().putString(UDKEY_CACHED_BRS_MOBILE_THEME, currentTheme).apply()
+    }
+
+    override fun getFont(): String {
+        return sharedPreferences!!.getString(FONT, "handwriting") ?: "handwriting"
+
+    }
+
+    override fun setFont(font: String) {
+        sharedPreferences!!.edit().putString(FONT, font).apply()
     }
 
     init {
@@ -83,6 +94,26 @@ class AppPreferencesHelper @Inject constructor(
         deletedNotes?.remove(noteId)
         editor.putStringSet(DELETED_NOTES, deletedNotes)
         editor.apply()
+    }
+
+    override fun saveDeletedDailyId(id: String) {
+        val editor = sharedPreferences!!.edit()
+        val deletedDaily = sharedPreferences!!.getStringSet(DELETED_DAILY, HashSet())
+        deletedDaily?.add(id)
+        editor.putStringSet(DELETED_DAILY, deletedDaily)
+        editor.apply()
+    }
+
+    override fun removeDeletedDailyId(id: String) {
+        val editor = sharedPreferences!!.edit()
+        val deletedDaily = sharedPreferences!!.getStringSet(DELETED_DAILY, HashSet())
+        deletedDaily?.remove(id)
+        editor.putStringSet(DELETED_DAILY, deletedDaily)
+        editor.apply()
+    }
+
+    override fun getDeletedDailyIds(): MutableSet<String>? {
+        return sharedPreferences!!.getStringSet(DELETED_DAILY, HashSet())
     }
 
 }

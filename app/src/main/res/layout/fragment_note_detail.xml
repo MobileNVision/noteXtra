@@ -12,13 +12,20 @@
             type="com.mobilenvision.notextra.ui.noteDetail.NoteDetailViewModel" />
 
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".NoteDetailFragment"
         android:background="?attr/colorSplashBackground">
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="180dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
         <EditText
             android:id="@+id/note_title"
@@ -56,10 +63,11 @@
         <EditText
             android:id="@+id/note_description"
             android:layout_width="match_parent"
-            android:layout_height="400dp"
+            android:layout_height="wrap_content"
             android:inputType="textMultiLine"
             android:padding="10dp"
             android:textSize="16sp"
+            android:minHeight="650dp"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:imeOptions="actionNext"
@@ -73,6 +81,25 @@
             app:layout_constraintTop_toBottomOf="@id/note_title"
             app:layout_constraintVertical_bias="0" />
 
+
+        <Button
+            android:id="@+id/btn_add_reminder"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:textAllCaps="false"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/add_reminder"
+            android:textColor="?attr/colorButtonText"
+            android:textStyle="bold"
+            android:onClick="@{() -> viewModel.onAddReminderClick()}"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/note_title"
+            app:layout_constraintBottom_toBottomOf="@id/note_title" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
         <Spinner
             android:id="@+id/spinner_category"
             android:layout_width="0dp"
@@ -81,7 +108,7 @@
             app:categoryListData="@{viewModel.getCategories}"
             app:layout_constraintEnd_toStartOf="@+id/btn_edit_category"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/note_description" />
+            app:layout_constraintBottom_toTopOf="@id/radioGroupPriority" />
 
         <Button
             android:id="@+id/btn_edit_category"
@@ -118,34 +145,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/spinner_category"/>
 
-        <Button
-            android:id="@+id/btn_add_reminder"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:textAllCaps="false"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/add_reminder"
-            android:textColor="?attr/colorButtonText"
-            android:textStyle="bold"
-            android:onClick="@{() -> viewModel.onAddReminderClick()}"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/note_title"
-            app:layout_constraintBottom_toBottomOf="@id/note_title" />
-
-        <Button
-            android:id="@+id/btn_edit_note"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="20dp"
-            android:textAllCaps="false"
-            android:background="@drawable/save_button"
-            android:textStyle="bold"
-            android:layout_margin="20dp"
-            android:onClick="@{() -> viewModel.onEditClick()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
         <TextView
             android:id="@+id/priorityTextview"
             android:layout_width="wrap_content"
@@ -166,9 +165,9 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintStart_toEndOf="@id/priorityTextview"
-            app:layout_constraintTop_toBottomOf="@id/spinner_category"
+            app:layout_constraintBottom_toTopOf="@id/btn_edit_note"
             android:layout_marginEnd="20dp">
 
             <RadioButton
@@ -213,6 +212,18 @@
             app:layout_constraintBottom_toBottomOf="@id/btn_edit_note"
             app:layout_constraintEnd_toStartOf="@id/btn_edit_note"
             android:background="@drawable/history" />
+        <Button
+            android:id="@+id/btn_edit_note"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:textAllCaps="false"
+            android:background="@drawable/save_button"
+            android:textStyle="bold"
+            android:layout_margin="20dp"
+            android:onClick="@{() -> viewModel.onEditClick()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <Button
             android:id="@+id/btn_delete_note"
@@ -227,5 +238,4 @@
             app:layout_constraintBottom_toBottomOf="@id/btn_history_note"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

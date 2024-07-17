@@ -16,6 +16,8 @@
         <item name="colorRoundItemBackground">@color/lightColorRoundItemBackground</item>
         <item name="colorUnselected">@color/lightColorUnselected</item>
         <item name="color">@color/lightColor</item>
+        <item name="colorButtonCenter">@color/lightColorButtonCenter</item>
+        <item name="colorButtonTop">@color/lightColorButtonTop</item>
     </style>
 
     <style name="Theme.NoteXtra.NoActionBar">

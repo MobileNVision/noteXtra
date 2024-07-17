@@ -106,8 +106,8 @@ class ProfileViewModel (dataManager: DataManager) : BaseViewModel<ProfileNavigat
                 updateUserToDatabase(user)
             }
             override fun onError(error: Throwable) {
-                navigator?.onFailure(error.message)
                 isBaseLoading.set(false)
+                navigator?.onFailure(error.message)
             }
         })
     }
@@ -132,5 +132,13 @@ class ProfileViewModel (dataManager: DataManager) : BaseViewModel<ProfileNavigat
     }
     fun onSaveClick(){
         navigator?.onSaveClick()
+    }
+
+    fun setFont(s: String) {
+        dataManager.setFont(s)
+    }
+
+    fun getFont(): String{
+        return dataManager.getFont()
     }
 }

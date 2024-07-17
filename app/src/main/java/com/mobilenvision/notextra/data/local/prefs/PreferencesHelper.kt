@@ -11,8 +11,12 @@ interface PreferencesHelper {
     fun clearUserData()
     fun getCurrentTheme(context: Context): String
     fun setCurrentTheme(context: Context, currentTheme: String)
-
+    fun getFont(): String
+    fun setFont(font: String)
     fun getDeletedNoteIds(): MutableSet<String>?
     fun saveDeletedNoteId(noteId: String)
     fun removeDeletedNoteId(noteId: String)
+    fun saveDeletedDailyId(id: String)
+    fun removeDeletedDailyId(id: String)
+    fun getDeletedDailyIds(): MutableSet<String>?
 }

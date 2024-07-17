@@ -13,12 +13,13 @@ class WidgetUpdateService : IntentService("WidgetUpdateService") {
         if (intent != null) {
             val action = intent.action
             if (ACTION_UPDATE_WIDGET == action) {
-                handleActionUpdateWidget()
+                val index = intent.getIntExtra(EXTRA_INDEX, 0)
+                handleActionUpdateWidget(index)
             }
         }
     }
 
-    private fun handleActionUpdateWidget() {
+    private fun handleActionUpdateWidget(index: Int) {
         val context = this.applicationContext
         val appWidgetManager = AppWidgetManager.getInstance(context)
         val thisWidget = ComponentName(context, NoteWidgetProvider::class.java)
@@ -26,18 +27,19 @@ class WidgetUpdateService : IntentService("WidgetUpdateService") {
 
         for (appWidgetId in appWidgetIds) {
             val note = getNoteFromPreferences(context)
-            NoteWidgetProvider.updateAppWidget(context, appWidgetManager, appWidgetId, note)
+            NoteWidgetProvider.updateAppWidget(context, appWidgetManager, appWidgetId, note, index)
         }
 
     }
 
-
     companion object {
         const val ACTION_UPDATE_WIDGET = "com.example.UPDATE_WIDGET"
+        const val EXTRA_INDEX = "com.example.EXTRA_INDEX"
 
-        fun startActionUpdateWidget(context: Context) {
+        fun startActionUpdateWidget(context: Context, index: Int = 0) {
             val intent = Intent(context, WidgetUpdateService::class.java)
             intent.action = ACTION_UPDATE_WIDGET
+            intent.putExtra(EXTRA_INDEX, index)
             context.startService(intent)
         }
     }

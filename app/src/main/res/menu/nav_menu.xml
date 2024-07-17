@@ -6,6 +6,11 @@
         android:enabled="true"
         android:title="@string/notes"  />
     <item
+        android:id="@+id/daily"
+        android:icon="@drawable/daily"
+        android:enabled="true"
+        android:title="@string/daily" />
+    <item
         android:id="@+id/profile"
         android:icon="@drawable/person"
         android:enabled="true"

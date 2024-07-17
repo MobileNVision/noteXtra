@@ -1,0 +1,27 @@
+<vector android:height="64dp" android:viewportHeight="256"
+    android:viewportWidth="256" android:width="64dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="?attr/colorButtonDark" android:fillType="nonZero"
+        android:pathData="M202.21,83.52L7.03,83.52c-3.1,0 -5.62,-2.51 -5.62,-5.62l0,-25.84c0,-8.57 6.97,-15.55 15.55,-15.55l175.33,0c8.57,0 15.54,6.97 15.54,15.55l0,25.84C207.83,81.01 205.31,83.52 202.21,83.52zM12.65,72.28l183.94,0l0,-20.22c0,-2.37 -1.93,-4.31 -4.3,-4.31L16.96,47.76c-2.37,0 -4.31,1.93 -4.31,4.31L12.65,72.28z"
+        android:strokeColor="?attr/colorButtonDark" android:strokeLineCap="butt"
+        android:strokeLineJoin="miter" android:strokeWidth="2.81"/>
+    <path android:fillColor="?attr/colorButtonDark" android:fillType="nonZero"
+        android:pathData="M190.88,232.16l-172.53,0c-9.34,0 -16.94,-7.6 -16.94,-16.94L1.41,77.9c0,-3.1 2.51,-5.62 5.62,-5.62s5.62,2.51 5.62,5.62l0,137.31c0,3.14 2.56,5.7 5.7,5.7l172.53,0c3.14,0 5.7,-2.56 5.7,-5.7l0,-17.38c0,-3.1 2.51,-5.62 5.62,-5.62s5.62,2.51 5.62,5.62l0,17.38C207.83,224.56 200.23,232.16 190.88,232.16z"
+        android:strokeColor="?attr/colorButtonDark" android:strokeLineCap="butt"
+        android:strokeLineJoin="miter" android:strokeWidth="2.81"/>
+    <path android:fillColor="?attr/colorButtonDark" android:fillType="nonZero"
+        android:pathData="M163.25,60.73c-3.1,0 -5.62,-2.51 -5.62,-5.62L157.63,29.18c0,-3.1 2.51,-5.62 5.62,-5.62s5.62,2.51 5.62,5.62l0,25.94C168.87,58.22 166.36,60.73 163.25,60.73z"
+        android:strokeColor="?attr/colorButtonDark" android:strokeLineCap="butt"
+        android:strokeLineJoin="miter" android:strokeWidth="2.81"/>
+    <path android:fillColor="?attr/colorButtonDark" android:fillType="nonZero"
+        android:pathData="M45.99,60.73c-3.1,0 -5.62,-2.51 -5.62,-5.62L40.37,29.18c0,-3.1 2.51,-5.62 5.62,-5.62s5.62,2.51 5.62,5.62l0,25.94C51.61,58.22 49.09,60.73 45.99,60.73z"
+        android:strokeColor="?attr/colorButtonDark" android:strokeLineCap="butt"
+        android:strokeLineJoin="miter" android:strokeWidth="2.81"/>
+    <path android:fillColor="?attr/colorButtonDark" android:fillType="nonZero"
+        android:pathData="M104.62,60.73c-3.1,0 -5.62,-2.51 -5.62,-5.62L99,29.18c0,-3.1 2.51,-5.62 5.62,-5.62s5.62,2.51 5.62,5.62l0,25.94C110.24,58.22 107.72,60.73 104.62,60.73z"
+        android:strokeColor="?attr/colorButtonDark" android:strokeLineCap="butt"
+        android:strokeLineJoin="miter" android:strokeWidth="2.81"/>
+    <path android:fillColor="?attr/colorButtonDark" android:fillType="nonZero"
+        android:pathData="M243.35,203.46L77.81,203.46c-10.88,0 -21.5,-3.82 -29.9,-10.77C16.18,166.47 1.41,130 1.41,77.9c0,-3.1 2.51,-5.62 5.62,-5.62l195.18,0c3.1,0 5.62,2.51 5.62,5.62c0,48.52 13.5,82.25 42.48,106.17c3.61,2.98 4.92,7.74 3.34,12.14C252.07,200.61 248.03,203.46 243.35,203.46zM12.71,83.52C13.73,129.01 27.26,161.04 55.07,184.02c6.4,5.29 14.47,8.2 22.74,8.2l164.71,0c-30.19,-25.23 -44.84,-59.89 -45.88,-108.69L12.71,83.52z"
+        android:strokeColor="?attr/colorButtonDark" android:strokeLineCap="butt"
+        android:strokeLineJoin="miter" android:strokeWidth="2.81"/>
+</vector>

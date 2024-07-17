@@ -4,8 +4,11 @@ import androidx.core.util.Supplier
 import androidx.lifecycle.ViewModelProvider
 import com.mobilenvision.notextra.ViewModelProviderFactory
 import com.mobilenvision.notextra.data.DataManager
+import com.mobilenvision.notextra.ui.addDaily.AddDailyViewModel
 import com.mobilenvision.notextra.ui.addNote.AddNoteViewModel
 import com.mobilenvision.notextra.ui.base.BaseFragment
+import com.mobilenvision.notextra.ui.daily.DailyAdapter
+import com.mobilenvision.notextra.ui.daily.DailyViewModel
 import com.mobilenvision.notextra.ui.noteDetail.NoteDetailViewModel
 import com.mobilenvision.notextra.ui.noteDetail.NoteVersionsAdapter
 import com.mobilenvision.notextra.ui.notes.NotesAdapter
@@ -62,6 +65,32 @@ class FragmentModule(fragment: BaseFragment<*, *>) {
         return ViewModelProvider(fragment, factory)[AddNoteViewModel::class.java]
     }
     @Provides
+    fun provideDailyViewModel(
+        dataManager: DataManager
+    ): DailyViewModel {
+        val supplier: Supplier<DailyViewModel> =
+            Supplier<DailyViewModel> {
+                DailyViewModel(dataManager)
+            }
+        val factory: ViewModelProviderFactory<DailyViewModel> = ViewModelProviderFactory(
+            DailyViewModel::class.java, supplier
+        )
+        return ViewModelProvider(fragment, factory)[DailyViewModel::class.java]
+    }
+    @Provides
+    fun provideAddDailyViewModelViewModel(
+        dataManager: DataManager
+    ): AddDailyViewModel {
+        val supplier: Supplier<AddDailyViewModel> =
+            Supplier<AddDailyViewModel> {
+                AddDailyViewModel(dataManager)
+            }
+        val factory: ViewModelProviderFactory<AddDailyViewModel> = ViewModelProviderFactory(
+            AddDailyViewModel::class.java, supplier
+        )
+        return ViewModelProvider(fragment, factory)[AddDailyViewModel::class.java]
+    }
+    @Provides
     fun provideNoteDetailViewModel(
         dataManager: DataManager
     ): NoteDetailViewModel {
@@ -77,6 +106,10 @@ class FragmentModule(fragment: BaseFragment<*, *>) {
     @Provides
     fun provideNotesAdapter(): NotesAdapter {
         return NotesAdapter(ArrayList())
+    }
+    @Provides
+    fun provideDailyAdapter(): DailyAdapter {
+        return DailyAdapter(ArrayList(), String())
     }
     @Provides
     fun provideNoteVersionAdapter(): NoteVersionsAdapter {

@@ -6,11 +6,15 @@ import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.mobilenvision.notextra.R
 import com.mobilenvision.notextra.data.model.db.Category
+import com.mobilenvision.notextra.data.model.db.Daily
 import com.mobilenvision.notextra.data.model.db.Note
+import com.mobilenvision.notextra.ui.daily.DailyAdapter
 import com.mobilenvision.notextra.ui.notes.NotesAdapter
 import java.io.IOException
 import java.net.HttpURLConnection
@@ -27,6 +31,31 @@ object BindingUtils {
         if (adapter != null && note != null) {
             adapter.addItems(note)
         }
+    }
+    @BindingAdapter("pagerAdapter")
+    @JvmStatic
+    fun pagerAdapter(pager: ViewPager2, daily: List<Daily>?) {
+        val adapter: DailyAdapter? = pager.adapter as DailyAdapter?
+        if (adapter != null && daily != null) {
+            adapter.addItems(daily)
+        }
+    }
+
+    @BindingAdapter("setFontFamily")
+    @JvmStatic
+    fun setFontFamily(textView: TextView, font: String) {
+        val fontResId = when (font) {
+            "handwriting" -> {
+                R.font.handwriting
+            }
+            "anandablack" -> {
+                R.font.anandablack
+            }
+            else -> {
+                R.font.shiftynotes
+            }
+        }
+        textView.typeface = ResourcesCompat.getFont(textView.context, fontResId)
     }
     @BindingAdapter("categoryListData")
     @JvmStatic
@@ -88,20 +117,38 @@ object BindingUtils {
     @JvmStatic
     @BindingAdapter("textTitle")
     fun setTextTitle(view: TextView, data: String) {
-        if (data.length > MAX_TITLE_LENGTH) {
-            view.text = "${data.substring(0, MAX_TITLE_LENGTH)}..."
-        } else {
-            view.text = data
-        }
+        view.text = getTrimmedText(data, MAX_TITLE_LENGTH)
     }
 
     @JvmStatic
     @BindingAdapter("textDescription")
     fun textDescription(view: TextView, data: String) {
-        if (data.length > MAX_TITLE_LENGTH) {
-            view.text = "${data.substring(0, MAX_TEXT_LENGTH)}..."
-        } else {
+        view.text = getTrimmedText(data, MAX_TEXT_LENGTH)
+    }
+
+    @JvmStatic
+    @BindingAdapter("category")
+    fun category(view: TextView, data: String?) {
+        if(!data.isNullOrEmpty()){
             view.text = data
         }
+        else{
+            view.text = "..."
+        }
     }
+
+    private fun getTrimmedText(data: String, maxLength: Int): String {
+        return if (data.length > maxLength) {
+            val endIndex = findLastSpaceIndex(data, maxLength)
+            "${data.substring(0, endIndex)} ..."
+        } else {
+            data
+        }
+    }
+
+    private fun findLastSpaceIndex(data: String, maxLength: Int): Int {
+        val endIndex = data.lastIndexOf(' ', maxLength)
+        return if (endIndex != -1) endIndex else maxLength
+    }
+
 }

@@ -1,65 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="wrap_content"
+    android:id="@+id/dialog_list_menu_layout"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp"
-    android:gravity="center_horizontal">
-    <TextView
-        android:id="@+id/delete"
-        android:layout_width="130dp"
+    android:padding="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_gradient_button"
-        android:drawablePadding="10dp"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:paddingStart="40dp"
-        android:text="@string/delete"
-        android:textColor="?attr/colorButtonText"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        app:drawableStartCompat="@drawable/delete"/>
-    <TextView
-        android:id="@+id/edit"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:text="@string/edit"
-        android:layout_marginTop="10dp"
-        android:textColor="?attr/colorButtonText"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:background="@drawable/rounded_gradient_button"
-        android:paddingStart="25dp"
-        app:drawableLeftCompat="@drawable/edit" />
-    <TextView
-        android:id="@+id/add_widget"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:text="@string/add_widget"
-        android:layout_marginTop="10dp"
-        android:textColor="?attr/colorButtonText"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:background="@drawable/rounded_gradient_button"
-        android:paddingStart="10dp"
-        app:drawableLeftCompat="@drawable/widget" />
-    <TextView
-        android:id="@+id/share"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:drawablePadding="10dp"
-        android:padding="10dp"
-        android:text="@string/share"
-        android:layout_marginTop="10dp"
-        android:textColor="?attr/colorButtonText"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:background="@drawable/rounded_gradient_button"
-        android:paddingStart="30dp"
-        app:drawableLeftCompat="@drawable/share" />
-</LinearLayout>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:padding="20dp"
+        android:background="@drawable/rounded_gradient_transparent">
+        <TextView
+            android:id="@+id/delete"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_gradient_button"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="@string/delete"
+            android:textColor="?attr/colorButtonText"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            app:drawableStartCompat="@drawable/delete"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/edit"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="@string/edit"
+            android:layout_marginTop="10dp"
+            android:textColor="?attr/colorButtonText"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_gradient_button"
+            app:drawableLeftCompat="@drawable/edit"
+            app:layout_constraintTop_toBottomOf="@id/delete"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/add_widget"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="@string/add_widget"
+            android:layout_marginTop="10dp"
+            android:textColor="?attr/colorButtonText"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_gradient_button"
+            app:drawableLeftCompat="@drawable/widget"
+            app:layout_constraintTop_toBottomOf="@id/edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+            android:id="@+id/share"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:padding="10dp"
+            android:text="@string/share"
+            android:layout_marginTop="10dp"
+            android:textColor="?attr/colorButtonText"
+            android:textStyle="bold"
+            android:textAllCaps="false"
+            android:background="@drawable/rounded_gradient_button"
+            app:drawableLeftCompat="@drawable/share"
+            app:layout_constraintTop_toBottomOf="@id/add_widget"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

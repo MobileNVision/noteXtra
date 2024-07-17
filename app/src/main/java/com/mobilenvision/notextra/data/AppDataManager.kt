@@ -6,6 +6,7 @@ import com.mobilenvision.notextra.data.local.db.DbCallback
 import com.mobilenvision.notextra.data.local.db.DbHelper
 import com.mobilenvision.notextra.data.local.prefs.PreferencesHelper
 import com.mobilenvision.notextra.data.model.db.Category
+import com.mobilenvision.notextra.data.model.db.Daily
 import com.mobilenvision.notextra.data.model.db.Note
 import com.mobilenvision.notextra.data.model.db.User
 import javax.inject.Inject
@@ -27,8 +28,16 @@ class AppDataManager @Inject constructor(
         mDbHelper.getAllNotes(callback)
     }
 
+    override fun getAllDaily(callback: DbCallback<List<Daily>>) {
+        mDbHelper.getAllDaily(callback)
+    }
+
     override fun getUnSynchronized(callback: DbCallback<List<Note>>) {
         mDbHelper.getUnSynchronized(callback)
+    }
+
+    override fun getUnSynchronizedDaily(callback: DbCallback<List<Daily>>) {
+        mDbHelper.getUnSynchronizedDaily(callback)
     }
 
 
@@ -40,8 +49,20 @@ class AppDataManager @Inject constructor(
         mDbHelper.loadNoteById(noteIds, callback)
     }
 
+    override fun loadDailyById(dailyIds: String, callback: DbCallback<Daily>) {
+        mDbHelper.loadDailyById(dailyIds,callback)
+    }
+
+    override fun loadDailyByDay(day: String, callback: DbCallback<Daily>) {
+        mDbHelper.loadDailyByDay(day,callback)
+    }
+
     override fun insertNote(note: Note, callback: DbCallback<Boolean>) {
         mDbHelper.insertNote(note, callback)
+    }
+
+    override fun insertDaily(daily: Daily, callback: DbCallback<Boolean>) {
+        mDbHelper.insertDaily(daily,callback)
     }
 
     override fun getAllCategories(callback: DbCallback<List<Category>>) {
@@ -88,6 +109,14 @@ class AppDataManager @Inject constructor(
         mDbHelper.updateIsSynchronized(noteId,isSynchronized,callback)
     }
 
+    override fun updateIsSynchronizedDaily(
+        dailyId: String,
+        isSynchronized: Boolean,
+        callback: DbCallback<Boolean>
+    ) {
+        mDbHelper.updateIsSynchronizedDaily(dailyId,isSynchronized,callback)
+    }
+
     override fun loadUserById(userId: String, callback: DbCallback<User>) {
         mDbHelper.loadUserById(userId, callback)
     }
@@ -96,12 +125,28 @@ class AppDataManager @Inject constructor(
         mDbHelper.updateUser(user, callback)
     }
 
+    override fun getAllDailyNotes(dbCallback: DbCallback<List<Daily>>) {
+        mDbHelper.getAllDailyNotes(dbCallback)
+    }
+
+    override fun deleteDaily(daily: Daily, dbCallback: DbCallback<Boolean>) {
+        mDbHelper.deleteDaily(daily, dbCallback)
+    }
+
+    override fun checkDailyExists(id: String, dbCallback: DbCallback<Boolean>) {
+        mDbHelper.checkDailyExists(id,dbCallback)
+    }
+
     override fun deleteNote(note: Note?, callback: DbCallback<Boolean>) {
         mDbHelper.deleteNote(note, callback)
     }
 
     override fun updateNote(note: Note, callback: DbCallback<Boolean>) {
         mDbHelper.updateNote(note, callback)
+    }
+
+    override fun updateDaily(daily: Daily, callback: DbCallback<Boolean>) {
+        mDbHelper.updateDaily(daily,callback)
     }
 
     override fun setRememberMe(rememberMe: Boolean) {
@@ -132,6 +177,14 @@ class AppDataManager @Inject constructor(
         mPreferencesHelper.setCurrentTheme(context,currentTheme)
     }
 
+    override fun getFont(): String {
+        return mPreferencesHelper.getFont()
+    }
+
+    override fun setFont(font: String) {
+        mPreferencesHelper.setFont(font)
+    }
+
     override fun getDeletedNoteIds(): MutableSet<String>? {
         return mPreferencesHelper.getDeletedNoteIds()
     }
@@ -142,6 +195,18 @@ class AppDataManager @Inject constructor(
 
     override fun removeDeletedNoteId(noteId: String) {
         mPreferencesHelper.removeDeletedNoteId(noteId)
+    }
+
+    override fun saveDeletedDailyId(id: String) {
+        mPreferencesHelper.saveDeletedDailyId(id)
+    }
+
+    override fun removeDeletedDailyId(id: String) {
+        mPreferencesHelper.removeDeletedDailyId(id)
+    }
+
+    override fun getDeletedDailyIds(): MutableSet<String>? {
+        return mPreferencesHelper.getDeletedDailyIds()
     }
 
 }

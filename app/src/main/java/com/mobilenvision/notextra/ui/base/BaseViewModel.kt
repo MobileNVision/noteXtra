@@ -74,4 +74,6 @@ abstract class BaseViewModel<N>(var dataManager: DataManager) : ViewModel() {
             dataManager.setCurrentTheme(context ,currentTheme)
 
     }
+
+
 }

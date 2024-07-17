@@ -30,4 +30,6 @@
     <attr name="colorStroke" format="reference"/>
     <attr name="colorRoundItemBackground" format="reference"/>
     <attr name="colorUnselected" format="reference"/>
+    <attr name="colorButtonCenter" format="reference"/>
+    <attr name="colorButtonTop" format="reference"/>
 </resources>

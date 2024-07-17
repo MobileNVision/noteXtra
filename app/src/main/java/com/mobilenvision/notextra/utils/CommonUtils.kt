@@ -8,10 +8,13 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import androidx.databinding.ViewDataBinding
 import com.mobilenvision.notextra.R
+import com.mobilenvision.notextra.data.model.db.Daily
 import com.mobilenvision.notextra.data.model.db.Note
 import com.mobilenvision.notextra.ui.base.BaseActivity
 import com.mobilenvision.notextra.ui.base.BaseViewModel
 import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class CommonUtils {
@@ -61,6 +64,32 @@ class CommonUtils {
             noteMap["userId"] = note.userId
             noteMap["priority"] = note.priority
             return noteMap
+        }
+        fun dailyToMap(daily: Daily): Map<String, Any?> {
+            val noteMap = mutableMapOf<String, Any?>()
+            noteMap["id"] = daily.id
+            noteMap["createdAt"] = daily.createdAt
+            noteMap["text"] = daily.text
+            noteMap["day"] = daily.day
+            noteMap["images"] = daily.images
+            noteMap["updatedAt"] = daily.updatedAt
+            noteMap["userId"] = daily.userId
+            return noteMap
+        }
+
+        fun getCurrentDate(): String {
+            return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        }
+        fun getTomorrowDate(): String {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, 1)
+            return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
+        }
+
+        fun getYesterdayDate(): String {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, -2)
+            return SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(calendar.time)
         }
         fun getMillisecondsFromString(selectedTime: String): Long {
             val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
